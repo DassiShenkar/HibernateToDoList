@@ -17,6 +17,7 @@
 		<!-- Mapping files -->
 		<mapping resource="User.hbm.xml"/>
 		<mapping resource="Item.hbm.xml"/>
+		<mapping resource="UserItem.hbm.xml"/>
 		
 </session-factory>
 </hibernate-configuration>

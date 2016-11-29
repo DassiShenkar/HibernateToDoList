@@ -1,7 +1,9 @@
 package il.ac.shenkar.hibernate;
 
-public class Item {
+import javax.persistence.Id;
 
+public class Item {
+	@Id
 	private int id;
 	private String itemName;
 	private String itemStatus;

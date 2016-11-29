@@ -1,6 +1,8 @@
 package il.ac.shenkar.hibernate;
 
-
+import java.util.List;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -28,7 +30,6 @@ public class HibernateToDoListDAO implements IToDoListDAO  {
 		session.save(user);
 		session.getTransaction().commit();
 		session.close();
-		
 	}
 
 	@Override
@@ -49,34 +50,54 @@ public class HibernateToDoListDAO implements IToDoListDAO  {
 	}
 
 	@Override
-	public void addItem(int userId, Item item) { // TODO: implement by user and item and not by table
+	public void addItem(int userId, Item item) { // add item to UserItem table with userID
+		UserItem useritem = new UserItem();
+		useritem.setItemID(item.getId());
+		useritem.setUserID(userId);
 		session.beginTransaction();
-		session.save(item);
+		session.save(useritem);
 		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
-	public void updateItem(int userId, Item item) { // TODO: implement by user and item and not by table
+	public void updateItem(int userId, Item item) { // update item in UserItem table
+		UserItem useritem = new UserItem();
+		useritem.setItemID(item.getId());
+		useritem.setUserID(userId);
 		session.beginTransaction();
-		session.update(item);
-		session.getTransaction().commit();
-		session.close();
-		
-	}
-
-	@Override
-	public void deleteItem(int userId, Item item) { // TODO: implement by user and item and not by table
-		session.beginTransaction();
-		session.delete(item);
+		session.update(useritem);
 		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
-	public void getAllItemsByUserID(User user) {
-		// TODO Auto-generated method stub
-		
+	public void deleteItem(int userId, Item item) {// delete item in UserItem table
+		UserItem useritem = new UserItem();
+		useritem.setItemID(item.getId());
+		useritem.setUserID(userId);
+		session.beginTransaction();
+		session.delete(useritem);
+		session.getTransaction().commit();
+		session.close();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public List getAllItemsByUserId(User user) {  // return a list of all items by userID
+		session.beginTransaction();
+		Query query = session.createQuery("from UserItem where userID = :userID");
+		query.setParameter("userID",2);
+		List list = query.list();
+		session.close();
+		return list;
+	}
+
+	@Override
+	public User getUserById(int userID) { // return user details by userID
+	        User user = null;
+	        user =  (User) session.get(User.class,userID);
+	        Hibernate.initialize(user);
+	        return user;
+	}
 }

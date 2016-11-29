@@ -1,6 +1,9 @@
 package il.ac.shenkar.hibernate;
 
+import javax.persistence.Id;
+
 public class User {
+	@Id
 	private int id;
 	private String name;
 	private String userName;
@@ -42,6 +45,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", userName=" + userName + ", password=" + password + "]";
+	}
+	
 	
 	
 }
