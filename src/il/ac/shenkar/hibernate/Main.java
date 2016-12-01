@@ -8,6 +8,6 @@ public class Main {
 		HibernateToDoListDAO hibernateToDoListDAO = HibernateToDoListDAO.getInstance();
 		User user = new User("arel gindos22", "music", "123456");
 		Item item = new Item(1,"shopping","accepted");
-		
+		System.out.println("hello");
 	}
 }
