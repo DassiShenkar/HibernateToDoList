@@ -3,49 +3,59 @@ package il.ac.shenkar.hibernate;
 import javax.persistence.Id;
 
 public class Item {
-	@Id
-	private int id;
-	private String itemName;
-	private String itemStatus;
-	
-	public Item(){
-		super();
-	}
+    @Id
+    private int id;
+    private int userId;
+    private String itemName;
+    private String itemStatus;
 
-	public int getId() {
-		return id;
-	}
+    public Item() {
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    }
 
-	public String getItemName() {
-		return itemName;
-	}
+    public Item(int userId, String itemName, String itemStatus) {
+        setUserId(userId);
+        setItemName(itemName);
+        setItemStatus(itemStatus);
+        HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
+        dao.addItem(this);
+    }
 
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getItemStatus() {
-		return itemStatus;
-	}
+    private void setId(int id) {
+        this.id = id;
+    }
 
-	public void setItemStatus(String itemStatus) {
-		this.itemStatus = itemStatus;
-	}
+    public int getUserId() {
+        return userId;
+    }
 
-	public Item(int id, String itemName, String itemStatus) {
-		super();
-		this.id = id;
-		this.itemName = itemName;
-		this.itemStatus = itemStatus;
-	}
+    private void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-	@Override
-	public String toString() {
-		return "Item [id=" + id + ", itemName=" + itemName + ", itemStatus=" + itemStatus + "]";
-	}
-	
+    public String getItemName() {
+        return itemName;
+    }
+
+    private void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getItemStatus() {
+        return itemStatus;
+    }
+
+    private void setItemStatus(String itemStatus) {
+        this.itemStatus = itemStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Item [itemId=" + getId() + ", userId=" + getUserId() + ", itemName=" + getItemName() + ", itemStatus=" + getItemStatus() + "]";
+    }
+
 }
