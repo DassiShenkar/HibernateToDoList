@@ -18,5 +18,7 @@ public interface IToDoListDAO {
 
     public User getUserById(int userId);
 
+    public List<User> getAllUsers();
+
     public List<Item> getAllItemsByUserId(int userId);
 }

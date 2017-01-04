@@ -5,14 +5,18 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        User user = new User("music_gindos", "123456");
-        User user2 = new User("yoel", "654321");
-        user.addItem("buy milk", "waiting");
-        Item item2 = new Item(user.getId(), "java homework", "in progress");
-        Item item1 = user.getItems().get(0);
+        User arel = new User("music_gindos", "123456");
+        User yoel = new User("yoel", "654321");
+        arel.addItem("buy milk", "waiting");
+        Item item2 = new Item(arel.getId(), "java homework", "in progress");
+        Item item1 = arel.getItems().get(0);
         item1.updateStatus("done");
-        List<Item> userItems = user.getItems();
-        user.deleteItem(item2);
-        userItems.forEach(item-> System.out.println(item.toString()));
+        arel.deleteItem(item2);
+        HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
+        dao.deleteUser(yoel);
+        dao.getAllUsers().forEach(user-> {
+            System.out.println(user.toString());
+            user.getItems().forEach(item-> System.out.println(item.toString()));
+        });
     }
 }

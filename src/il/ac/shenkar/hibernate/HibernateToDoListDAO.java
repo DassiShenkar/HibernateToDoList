@@ -79,6 +79,16 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.close();
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from User");
+        List users = query.list();
+        session.close();
+        return users;
+    }
+
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public List<Item> getAllItemsByUserId(int userId) {
