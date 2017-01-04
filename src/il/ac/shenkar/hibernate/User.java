@@ -6,7 +6,6 @@ import java.util.List;
 public class User {
     @Id
     private int id;
-    private String name;
     private String userName;
     private String password;
     private static final HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
@@ -15,8 +14,7 @@ public class User {
         super();
     }
 
-    public User(String name, String userName, String password) {
-        setName(name);
+    public User(String userName, String password) {
         setUserName(userName);
         setPassword(password);
         dao.createUser(this);
@@ -28,14 +26,6 @@ public class User {
 
     private void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    private void setName(String name) {
-        this.name = name;
     }
 
     public String getUserName() {
@@ -58,12 +48,16 @@ public class User {
         Item item = new Item(getId(), itemName, itemStatus);
     }
 
+    public void deleteItem(Item item) {
+        dao.deleteItem(item);
+    }
+
     public List<Item> getItems() {
         return dao.getAllItemsByUserId(getId());
     }
 
     @Override
     public String toString() {
-        return "User [id=" + getId() + ", name=" + getName() + ", userName=" + getUserName() + ", password=" + getPassword() + "]";
+        return "User [id=" + getId() + ", name=" +  ", userName=" + getUserName() + ", password=" + getPassword() + "]";
     }
 }

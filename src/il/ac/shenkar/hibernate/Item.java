@@ -6,17 +6,17 @@ public class Item {
     @Id
     private int id;
     private int userId;
-    private String itemName;
-    private String itemStatus;
+    private String title;
+    private String status;
 
     public Item() {
 
     }
 
-    public Item(int userId, String itemName, String itemStatus) {
+    public Item(int userId, String title, String status) {
         setUserId(userId);
-        setItemName(itemName);
-        setItemStatus(itemStatus);
+        setTitle(title);
+        setStatus(status);
         HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
         dao.addItem(this);
     }
@@ -37,25 +37,25 @@ public class Item {
         this.userId = userId;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getTitle() {
+        return title;
     }
 
-    private void setItemName(String itemName) {
-        this.itemName = itemName;
+    private void setTitle(String itemName) {
+        this.title = itemName;
     }
 
-    public String getItemStatus() {
-        return itemStatus;
+    public String getStatus() {
+        return status;
     }
 
-    private void setItemStatus(String itemStatus) {
-        this.itemStatus = itemStatus;
+    private void setStatus(String itemStatus) {
+        this.status = itemStatus;
     }
 
     @Override
     public String toString() {
-        return "Item [itemId=" + getId() + ", userId=" + getUserId() + ", itemName=" + getItemName() + ", itemStatus=" + getItemStatus() + "]";
+        return "Item [itemId=" + getId() + ", userId=" + getUserId() + ", itemName=" + getTitle() + ", status=" + getStatus() + "]";
     }
 
 }

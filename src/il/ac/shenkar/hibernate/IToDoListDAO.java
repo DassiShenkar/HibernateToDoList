@@ -14,7 +14,7 @@ public interface IToDoListDAO {
 
     public void updateItem(int userId, Item item);
 
-    public void deleteItem(int userId, Item item);
+    public void deleteItem(Item item);
 
     public User getUserById(int userId);
 

@@ -7,9 +7,6 @@
 		<id name="id" type="int" column="ID" >
 			<generator class="increment"/>
 		</id>
-		<property name="name">
-			<column name="NAME"/>
-		</property>
 		<property name="userName">
 			<column name="USERNAME"/>
 		</property>

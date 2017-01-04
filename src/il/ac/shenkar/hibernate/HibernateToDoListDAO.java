@@ -71,7 +71,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void deleteItem(int userId, Item item) {
+    public void deleteItem(Item item) {
         session = factory.openSession();
         session.beginTransaction();
         session.delete(item);
