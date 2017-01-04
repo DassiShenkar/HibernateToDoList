@@ -1,6 +1,7 @@
 package il.ac.shenkar.hibernate;
 
 import javax.persistence.Id;
+import java.util.List;
 
 public class User {
     @Id
@@ -55,6 +56,10 @@ public class User {
 
     public void addItem(String itemName, String itemStatus) {
         Item item = new Item(getId(), itemName, itemStatus);
+    }
+
+    public List<Item> getItems() {
+        return dao.getAllItemsByUserId(getId());
     }
 
     @Override

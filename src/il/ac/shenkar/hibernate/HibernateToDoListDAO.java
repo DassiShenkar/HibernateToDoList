@@ -63,6 +63,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     @Override
     public void updateItem(int userId, Item item) {
+        session = factory.openSession();
         session.beginTransaction();
         session.update(item);
         session.getTransaction().commit();
@@ -71,6 +72,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     @Override
     public void deleteItem(int userId, Item item) {
+        session = factory.openSession();
         session.beginTransaction();
         session.delete(item);
         session.getTransaction().commit();
@@ -79,10 +81,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public List getAllItemsByUserId(User user) {
+    public List<Item> getAllItemsByUserId(int userId) {
+        session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from Item where userId = :userID");
-        query.setParameter("userId", user.getId());
+        Query query = session.createQuery("from Item where userId = :userId");
+        query.setParameter("userId", userId);
         List list = query.list();
         session.close();
         return list;
@@ -90,6 +93,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     @Override
     public User getUserById(int userID) {
+        session = factory.openSession();
         User user = null;
         user = (User) session.get(User.class, userID);
         Hibernate.initialize(user);

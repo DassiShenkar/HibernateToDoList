@@ -6,7 +6,7 @@ import java.util.List;
 public interface IToDoListDAO {
     public void createUser(User user);
 
-    public void deleteUser(User userID);
+    public void deleteUser(User userId);
 
     public void updateUser(User user);
 
@@ -16,7 +16,7 @@ public interface IToDoListDAO {
 
     public void deleteItem(int userId, Item item);
 
-    public User getUserById(int userID);
+    public User getUserById(int userId);
 
-    public List<Item> getAllItemsByUserId(User user);
+    public List<Item> getAllItemsByUserId(int userId);
 }
