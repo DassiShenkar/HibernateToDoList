@@ -62,7 +62,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void updateItem(int userId, Item item) {
+    public void updateItem(Item item) {
         session = factory.openSession();
         session.beginTransaction();
         session.update(item);

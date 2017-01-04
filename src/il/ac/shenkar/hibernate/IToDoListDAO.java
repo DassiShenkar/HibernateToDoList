@@ -12,7 +12,7 @@ public interface IToDoListDAO {
 
     public void addItem(Item item);
 
-    public void updateItem(int userId, Item item);
+    public void updateItem(Item item);
 
     public void deleteItem(Item item);
 

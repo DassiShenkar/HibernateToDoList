@@ -10,11 +10,11 @@
 		<property name="userId">
 			<column name="USERID"/>
 		</property>
-		<property name="itemName">
-			<column name="ITEMNAME"/>
+		<property name="title">
+			<column name="TITLE"/>
 		</property>
-		<property name="itemStatus">
-			<column name="ITEMSTATUS"/>
+		<property name="status">
+			<column name="STATUS"/>
 		</property>
 	</class>
 </hibernate-mapping>

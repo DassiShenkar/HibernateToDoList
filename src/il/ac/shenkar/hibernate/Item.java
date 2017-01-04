@@ -8,6 +8,7 @@ public class Item {
     private int userId;
     private String title;
     private String status;
+    private static final HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
 
     public Item() {
 
@@ -17,7 +18,6 @@ public class Item {
         setUserId(userId);
         setTitle(title);
         setStatus(status);
-        HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
         dao.addItem(this);
     }
 
@@ -51,6 +51,11 @@ public class Item {
 
     private void setStatus(String itemStatus) {
         this.status = itemStatus;
+    }
+
+    public void updateStatus(String status) {
+        setStatus(status);
+        dao.updateItem(this);
     }
 
     @Override
