@@ -4,21 +4,23 @@ package il.ac.shenkar.hibernate;
 import java.util.List;
 
 public interface IToDoListDAO {
-    public void createUser(User user);
+     void createUser(User user);
 
-    public void deleteUser(User userId);
+     void deleteUser(User userId);
 
-    public void updateUser(User user);
+     void updateUser(User user);
 
-    public void addItem(Item item);
+     boolean checkIfUserExists(User user);
 
-    public void updateItem(Item item);
+     void addItem(Item item);
 
-    public void deleteItem(Item item);
+     void updateItem(Item item);
 
-    public User getUserById(int userId);
+     void deleteItem(Item item);
 
-    public List<User> getAllUsers();
+     User getUserById(int userId);
 
-    public List<Item> getAllItemsByUserId(int userId);
+     List<User> getAllUsers();
+
+     List<Item> getAllItemsByUserId(int userId);
 }

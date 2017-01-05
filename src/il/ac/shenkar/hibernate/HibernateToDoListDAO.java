@@ -30,7 +30,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.save(user);
         session.getTransaction().commit();
-        session.close();
+        //session.close();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.delete(user);
         session.getTransaction().commit();
-        session.close();
+        //session.close();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.update(user);
         session.getTransaction().commit();
-        session.close();
+       // session.close();
 
     }
 
@@ -58,7 +58,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.save(item);
         session.getTransaction().commit();
-        session.close();
+        //session.close();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.update(item);
         session.getTransaction().commit();
-        session.close();
+        //session.close();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.delete(item);
         session.getTransaction().commit();
-        session.close();
+        //session.close();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         Query query = session.createQuery("from User");
         List users = query.list();
-        session.close();
+        //session.close();
         return users;
     }
 
@@ -97,7 +97,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         Query query = session.createQuery("from Item where userId = :userId");
         query.setParameter("userId", userId);
         List list = query.list();
-        session.close();
+        //session.close();
         return list;
     }
 
@@ -108,5 +108,14 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         user = (User) session.get(User.class, userID);
         Hibernate.initialize(user);
         return user;
+    }
+    @Override
+    public boolean checkIfUserExists(User user) {
+        session.beginTransaction();
+        Query query = session.createQuery("from User where USERNAME= :username");
+        query.setParameter("username",user.getUserName());
+        List list = query.list();
+        //session.close();
+        return list.isEmpty()? false:true;
     }
 }
