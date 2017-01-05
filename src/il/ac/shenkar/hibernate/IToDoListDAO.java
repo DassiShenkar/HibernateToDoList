@@ -18,7 +18,7 @@ public interface IToDoListDAO {
 
      void deleteItem(Item item);
 
-     User getUserById(int userId);
+     User getUserIdByUserName(String userName);
 
      List<User> getAllUsers();
 

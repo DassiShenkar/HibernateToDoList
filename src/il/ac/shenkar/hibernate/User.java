@@ -16,8 +16,6 @@ public class User {
 
     public User(String userName, String password) {
         setUserName(userName);
-        setPassword(password);
-        dao.createUser(this);
     }
 
     public int getId() {

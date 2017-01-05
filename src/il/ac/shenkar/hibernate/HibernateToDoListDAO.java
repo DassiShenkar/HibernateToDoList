@@ -30,7 +30,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.save(user);
         session.getTransaction().commit();
-        //session.close();
     }
 
     @Override
@@ -39,7 +38,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.delete(user);
         session.getTransaction().commit();
-        //session.close();
     }
 
     @Override
@@ -48,8 +46,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.update(user);
         session.getTransaction().commit();
-       // session.close();
-
     }
 
     @Override
@@ -58,7 +54,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.save(item);
         session.getTransaction().commit();
-        //session.close();
     }
 
     @Override
@@ -67,7 +62,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.update(item);
         session.getTransaction().commit();
-        //session.close();
     }
 
     @Override
@@ -76,7 +70,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         session.delete(item);
         session.getTransaction().commit();
-        //session.close();
     }
 
     @Override
@@ -85,7 +78,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         Query query = session.createQuery("from User");
         List users = query.list();
-        //session.close();
         return users;
     }
 
@@ -97,25 +89,31 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         Query query = session.createQuery("from Item where userId = :userId");
         query.setParameter("userId", userId);
         List list = query.list();
-        //session.close();
         return list;
     }
 
     @Override
-    public User getUserById(int userID) {
+    public User getUserIdByUserName(String userName) {//TODO: fix get user by id
         session = factory.openSession();
         User user = null;
-        user = (User) session.get(User.class, userID);
-        Hibernate.initialize(user);
+//        Query query = session.createQuery("from User where USERNAME= :username");
+//        query.setParameter("username",userName);
+//        List list = query.list();
+//        for(User user : list){
+//            return user;
+//        }
+       // System.out.println(list.get(0).getId);
+        //user = (User) session.get(User.class, userName);
+        //Hibernate.initialize(user);
         return user;
     }
     @Override
     public boolean checkIfUserExists(User user) {
+        session = factory.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from User where USERNAME= :username");
         query.setParameter("username",user.getUserName());
         List list = query.list();
-        //session.close();
         return list.isEmpty()? false:true;
     }
 }
