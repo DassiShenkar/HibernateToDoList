@@ -35,9 +35,14 @@ public class ToDoServlet extends HttpServlet {
                     request.setAttribute("status", "don't exist");
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
+                break;
             case "create":
                 dao.createUser(new User(request.getParameter("email"),request.getParameter("password")));
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                break;
+
+            case "add_task":
+                System.out.println("add_task");
         }
     }
 }
