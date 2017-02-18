@@ -41,7 +41,7 @@ public class Item {
         return title;
     }
 
-    private void setTitle(String itemName) {
+    public void setTitle(String itemName) {
         this.title = itemName;
     }
 
@@ -49,7 +49,7 @@ public class Item {
         return status;
     }
 
-    private void setStatus(String itemStatus) {
+    public void setStatus(String itemStatus) {
         this.status = itemStatus;
     }
 
