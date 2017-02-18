@@ -1,20 +1,15 @@
 package il.ac.shenkar.hibernate;
 
 public class Main {
-
-    public static void main(String[] args) {
-        User arel = new User("music_gindos", "123456");
-        User yoel = new User("yoel", "654321");
-        arel.addItem("buy milk", "waiting");
-        Item item2 = new Item(arel.getId(), "java homework", "in progress");
-        Item item1 = arel.getItems().get(0);
-        item1.updateStatus("done");
-        arel.deleteItem(item2);
+    public static void main(String []args){
         HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
-        dao.deleteUser(yoel);
-        dao.getAllUsers().forEach(user-> {
-            System.out.println(user.toString());
-            user.getItems().forEach(item-> System.out.println(item.toString()));
-        });
+        User user = new User("lifemichael","life");
+        Item item = new Item(user.getId(),"Learn to java EE exam","Waiting");
+        Item item1 = new Item(user.getId(),"shopping","Waiting");
+        dao.createUser(user);
+        dao.addItem(item);
+        dao.addItem(item1);
+        item.setStatus("done");
+        dao.updateItem(item);
     }
 }
