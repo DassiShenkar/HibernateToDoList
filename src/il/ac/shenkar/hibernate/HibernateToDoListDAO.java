@@ -93,6 +93,19 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
+    public Item getItemByID(int itemID) {
+        Item item = null;
+        session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Item where ID = :itemID");
+        query.setParameter("itemID", itemID);
+        List list = query.list();
+        item = (Item)list.get(0);
+        return item;
+    }
+
+
+    @Override
     public User getUserIdByUserName(String userName) {//TODO: fix get user by id
         session = factory.openSession();
         User user = null;
