@@ -1,16 +1,10 @@
 package il.ac.shenkar.hibernate;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 
 /**
@@ -18,15 +12,22 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/ToDoServlet")
 public class ToDoServlet extends HttpServlet {
+
+    @Override
+    public void init() throws ServletException {
+
+    }
+
     HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        switch(request.getParameter("action")) {
+        RequestDispatcher view = null;
+        switch (request.getParameter("action")) {
             case "index":
-                HttpSession session = request.getSession(true);
-                if((Boolean)session.getAttribute("loggedIn")){
+                HttpSession session1 = request.getSession(true);
+                if ((Boolean) session1.getAttribute("loggedIn")) {
                     System.out.println("logged in");
                 }
-                RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+                view = request.getRequestDispatcher("index.jsp");
                 view.forward(request, response);
                 request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
                 break;
@@ -39,23 +40,54 @@ public class ToDoServlet extends HttpServlet {
                 request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));//TODO: fix getUserByUserName and add a call to dao
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 break;
-        }
+            case "tasks":
+                int user_id = Integer.parseInt(request.getParameter("id"));
+                request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));//TODO: fix getUserByUserName and add a call to dao
+                request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+            case "log_out":
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (int i = 0; i < cookies.length; i++) {
+                        if (cookies[i].getName().equals("logged_in")) {
+                            cookies[i].setMaxAge(0);
+                            cookies[i].setValue("");
+                            response.addCookie(cookies[i]);
+                        } else if (cookies[i].getName().equals("user_id")) {
+                            cookies[i].setMaxAge(0);
+                            cookies[i].setValue("");
+                            response.addCookie(cookies[i]);
+                        } else if (cookies[i].getName().equals("name")) {
+                            cookies[i].setMaxAge(0);
+                            cookies[i].setValue("");
+                            response.addCookie(cookies[i]);
+                        }
+                    }
+                    view = request.getRequestDispatcher("index.jsp");
+                    view.forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+                    break;
+                }
 
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch(request.getParameter("action")){
             case "login":
-                boolean exist = dao.checkIfUserExists(new User(request.getParameter("email"),request.getParameter("password")));
+                User user = new User(request.getParameter("email"),request.getParameter("password"));
+                boolean exist = dao.checkIfUserExists(user);
                 if(exist){
-                    HttpSession session = request.getSession(true);
-//                    Date creationTime = new Date(session.getCreationTime());
-//                    Date lastAccessTime = new Date(session.getLastAccessedTime());
-//                    session.setAttribute("useriD",dao.getUserIdByEmail(new User(request.getParameter("email"),request.getParameter("password"))));
-//                    session.isNew()
-                    request.setAttribute("tasksList", dao.getAllItemsByUserId(1));//TODO: fix getUserByUserName and add a call to dao
+                    Cookie cookie = new Cookie("logged_in","true");
+                    Cookie cookie1 = new Cookie("user_id",Integer.toString(dao.getUserIdByEmail(user)));
+                    Cookie cookie2 = new Cookie("name",user.getUserName());
+                    cookie.setMaxAge(60*60*24);
+                    cookie1.setMaxAge(60*60*24);
+                    cookie2.setMaxAge(60*60*24);
+                    response.addCookie(cookie);
+                    response.addCookie(cookie1);
+                    response.addCookie(cookie2);
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(Integer.parseInt(cookie1.getValue())));//TODO: fix getUserByUserName and add a call to dao
                     request.getRequestDispatcher("/tasks.jsp").forward(request, response);
-
                 }
                 else{
                     request.setAttribute("status", "don't exist");

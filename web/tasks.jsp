@@ -18,6 +18,7 @@
 
     </head>
     <body>
+        <button type="button" class="btn btn-primary" onclick="location.href='/ToDoServlet?action=log_out'">Log out</button>
         <table class="table table-striped table-bordered">
             <tr>
                 <th>ID</th>
@@ -26,11 +27,24 @@
                 <th>Actions</th>
             </tr>
             <%
+                String user_email = "";
+                int userID=0;
+                Cookie[] cookies = request.getCookies();
+                if(cookies != null) {
+                    for (int i = 0; i < cookies.length; i++) {
+                        if (cookies[i].getName().equals("user_id")) {
+                            userID = Integer.parseInt(cookies[i].getValue());
+                        }
+                        else if(cookies[i].getName().equals("name")){
+                            user_email = cookies[i].getValue();
+                            out.println("<h1 class='name'>"+user_email+"'s tasks</h1>");
+                        }
+                    }
+                }
 
                 List<Item> list = (ArrayList<Item>)request.getAttribute("tasksList");
-                int userID = 0;
-                for(Item item : list){
-                    userID = item.getUserId();
+                if(list != null && list.size() != 0){
+                    for(Item item : list){
             %>
             <tr>
                 <form method="post" action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>">
@@ -42,11 +56,10 @@
                         <input type="button" id="delete_button" value="Delete" class="delete" onclick="location.href='/ToDoServlet?action=delete&id=<%= item.getId()%>&userID=<%= item.getUserId()%>';">
                     </td>
                 </form>
-
             </tr>
             <%
+                    }
                 }
-
             %>
             <tr>
                 <form method="post" action="ToDoServlet?action=addItem&userID=<%= userID%>">

@@ -24,6 +24,8 @@ public interface IToDoListDAO {
 
      int getUserIdByEmail(User user);
 
+     String getNameById(int userId);
+
      List<User> getAllUsers();
 
      List<Item> getAllItemsByUserId(int userId);
