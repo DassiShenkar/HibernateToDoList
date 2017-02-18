@@ -20,11 +20,13 @@ public interface IToDoListDAO {
 
      Item getItemByID(int itemID);
 
-     User getUserIdByUserName(String userName);
-
      int getUserIdByEmail(User user);
 
+     List getAllTasks();
+
      String getNameById(int userId);
+
+     User getUserById(int userID);
 
      List<User> getAllUsers();
 

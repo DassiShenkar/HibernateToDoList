@@ -34,7 +34,13 @@ public class ToDoServlet extends HttpServlet {
 
             case "tasks":
                 int user_id = Integer.parseInt(request.getParameter("id"));
-                request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));
+                User user = dao.getUserById(Integer.parseInt(request.getParameter("id")));
+                if(user.getUserName().equals("administrator") && user.getPassword().equals("admin")){
+                    request.setAttribute("tasksList", dao.getAllTasks());
+                }
+                else{
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));
+                }
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
 
                 case "log_out":
@@ -78,7 +84,13 @@ public class ToDoServlet extends HttpServlet {
                     response.addCookie(cookie);
                     response.addCookie(cookie1);
                     response.addCookie(cookie2);
-                    request.setAttribute("tasksList", dao.getAllItemsByUserId(Integer.parseInt(cookie1.getValue())));
+                    if(request.getParameter("email").equals("administrator") && request.getParameter("password").equals("admin")){
+                        request.setAttribute("tasksList", dao.getAllTasks());
+                    }
+                    else{
+                        request.setAttribute("tasksList", dao.getAllItemsByUserId(Integer.parseInt(cookie1.getValue())));
+                    }
+
                     request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 }
                 else{
@@ -88,7 +100,13 @@ public class ToDoServlet extends HttpServlet {
                 break;
 
             case "create":
-                dao.createUser(new User(request.getParameter("email"),request.getParameter("password")));
+                User usr = new User(request.getParameter("email"),request.getParameter("password"));
+                dao.createUser(usr);
+                Cookie cookie = new Cookie("id",Integer.toString(usr.getId()));
+                cookie.setMaxAge(60*60*24);
+                response.addCookie(cookie);
+                //TODO: add administrator to cookies
+                // add username in tasks.jsp
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 break;
 

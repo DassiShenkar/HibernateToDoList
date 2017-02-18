@@ -15,10 +15,8 @@
 <body>
 <p>enter your personal information for sign up:</p>
 <form method="post" action="ToDoServlet?action=create">
-    <label>Name<input type="text" name="name"></label>
-    <label>Email<input type="text" name="email"></label>
+    <label>Username<input type="text" name="email"></label>
     <label>Password<input type="password" name="password"></label>
-    <label>Return your password<input type="password" name="password2"></label>
     <input type="submit" value="Sign Up">
 </form>
 </body>

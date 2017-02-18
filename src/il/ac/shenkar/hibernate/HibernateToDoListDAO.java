@@ -93,6 +93,16 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
+    public User getUserById(int userID){
+        session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from User where ID = :userId");
+        query.setParameter("userId", userID);
+        List list = query.list();
+        return (User)list.get(0);
+    }
+
+    @Override
     public Item getItemByID(int itemID) {
         Item item = null;
         session = factory.openSession();
@@ -104,22 +114,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         return item;
     }
 
-
-    @Override
-    public User getUserIdByUserName(String userName) {//TODO: fix get user by id
-        session = factory.openSession();
-        User user = null;
-//        Query query = session.createQuery("from User where USERNAME= :username");
-//        query.setParameter("username",userName);
-//        List list = query.list();
-//        for(User user : list){
-//            return user;
-//        }
-       // System.out.println(list.get(0).getId);
-        //user = (User) session.get(User.class, userName);
-        //Hibernate.initialize(user);
-        return user;
-    }
     @Override
     public boolean checkIfUserExists(User user) {
         session = factory.openSession();
@@ -149,5 +143,14 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         query.setParameter("userId", userId);
         List list = query.list();
         return (String)list.get(1);
+    }
+
+    @Override
+    public List getAllTasks() {
+        session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Item");
+        List list = query.list();
+        return list;
     }
 }
