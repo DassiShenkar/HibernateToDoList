@@ -2,6 +2,7 @@ package il.ac.shenkar.hibernate;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -20,6 +22,10 @@ public class ToDoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch(request.getParameter("action")) {
             case "index":
+                HttpSession session = request.getSession(true);
+                if((Boolean)session.getAttribute("loggedIn")){
+                    System.out.println("logged in");
+                }
                 RequestDispatcher view = request.getRequestDispatcher("index.jsp");
                 view.forward(request, response);
                 request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
@@ -33,16 +39,6 @@ public class ToDoServlet extends HttpServlet {
                 request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));//TODO: fix getUserByUserName and add a call to dao
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 break;
-
-            case "changeStatus":
-                int itemID = Integer.parseInt(request.getParameter("id"));
-                int userID1 = Integer.parseInt(request.getParameter("userID"));
-                Item tempItem = dao.getItemByID(itemID);
-                tempItem.setStatus("done");
-                dao.updateItem(tempItem);
-                request.setAttribute("tasksList", dao.getAllItemsByUserId(userID1));//TODO: fix getUserByUserName and add a call to dao
-                request.getRequestDispatcher("/tasks.jsp").forward(request, response);
-                    break;
         }
 
     }
@@ -52,8 +48,14 @@ public class ToDoServlet extends HttpServlet {
             case "login":
                 boolean exist = dao.checkIfUserExists(new User(request.getParameter("email"),request.getParameter("password")));
                 if(exist){
+                    HttpSession session = request.getSession(true);
+//                    Date creationTime = new Date(session.getCreationTime());
+//                    Date lastAccessTime = new Date(session.getLastAccessedTime());
+//                    session.setAttribute("useriD",dao.getUserIdByEmail(new User(request.getParameter("email"),request.getParameter("password"))));
+//                    session.isNew()
                     request.setAttribute("tasksList", dao.getAllItemsByUserId(1));//TODO: fix getUserByUserName and add a call to dao
                     request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+
                 }
                 else{
                     request.setAttribute("status", "don't exist");

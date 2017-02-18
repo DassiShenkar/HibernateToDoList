@@ -14,6 +14,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
         <title>Insert title here</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style.css">
+
     </head>
     <body>
         <table class="table table-striped table-bordered">
@@ -24,26 +26,38 @@
                 <th>Actions</th>
             </tr>
             <%
+
                 List<Item> list = (ArrayList<Item>)request.getAttribute("tasksList");
+                int userID = 0;
                 for(Item item : list){
+                    userID = item.getUserId();
             %>
             <tr>
-                <td> <%= item.getId()%></td>
-                <td><%=item.getTitle()%> </td>
-                <td> <%=item.getStatus()%></td>
-                <td>
-                    <input type="button" id="edit_button1" value="Edit" class="edit" onclick="form.action='ToDoServlet?action=edit&id=<%= item.getId()%>';">
-                    <input type="button" id="save_button1" value="Save" class="save" onclick="form.action='ToDoServlet?action=save&id=<%= item.getId()%>';">
-                    <input type="button" id="delete_button" value="Delete" class="delete" onclick="form.action='ToDoServlet?action=delete&id=<%= item.getId()%>';">
-                </td>
+                <form method="post" action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>">
+                    <td> <%= item.getId()%></td>
+                    <td><input  name="title" value="<%=item.getTitle()%>"/> </td>
+                    <td><input name="status" value="<%=item.getStatus()%>"/> </td>
+                    <td>
+                        <input type="submit" id="save_button" value="Save" class="save">
+                        <input type="button" id="delete_button" value="Delete" class="delete" onclick="location.href='/ToDoServlet?action=delete&id=<%= item.getId()%>&userID=<%= item.getUserId()%>';">
+                    </td>
+                </form>
+
             </tr>
             <%
                 }
-            %>
-        </table>
-        <form method="post" action="ToDoServlet?action=add_task">
-            <button class="btn btn-primary add_task" type="submit" value="Add Task"></button>
-        </form>
 
+            %>
+            <tr>
+                <form method="post" action="ToDoServlet?action=addItem&userID=<%= userID%>">
+                    <td>id</td>
+                    <td><input name="title" placeholder="Add task name"/> </td>
+                    <td><input name="status" placeholder="Add task status"/> </td>
+                    <td>
+                        <input type="submit" id="add_task" value="Add task">
+                    </td>
+                </form>
+            </tr>
+        </table>
     </body>
 </html>

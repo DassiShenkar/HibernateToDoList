@@ -129,4 +129,15 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         List list = query.list();
         return list.isEmpty()? false:true;
     }
+
+    @Override
+    public int getUserIdByEmail(User user) {
+        session = factory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from User where USERNAME= :username");
+        query.setParameter("username", user.getUserName());
+        List list = query.list();
+        User tempUser = (User)list.get(0);
+        return tempUser.getId();
+    }
 }
