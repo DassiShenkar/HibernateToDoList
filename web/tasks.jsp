@@ -37,19 +37,20 @@
                         }
                         else if(cookies[i].getName().equals("name")){
                             user_email = cookies[i].getValue();
-                            out.println("<h1 class='name'>"+user_email+"'s tasks</h1>");
+                            out.println("<h1 class='name'>Hello "+user_email+"</h1>");
                         }
                     }
                 }
 
                 List<Item> list = (ArrayList<Item>)request.getAttribute("tasksList");
                 if(list != null && list.size() != 0){
+                    out.println("<h3>You have "+list.size()+" tasks</h3>");
                     for(Item item : list){
             %>
             <tr>
                 <form method="post" action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>">
                     <td> <%= item.getId()%></td>
-                    <td><input  name="title" value="<%=item.getTitle()%>"/> </td>
+                    <td><input name="title" value="<%=item.getTitle()%>"/> </td>
                     <td><input name="status" value="<%=item.getStatus()%>"/> </td>
                     <td>
                         <input type="submit" id="save_button" value="Save" class="save">
@@ -64,8 +65,8 @@
             <tr>
                 <form method="post" action="ToDoServlet?action=addItem&userID=<%= userID%>">
                     <td>id</td>
-                    <td><input name="title" placeholder="Add task name"/> </td>
-                    <td><input name="status" placeholder="Add task status"/> </td>
+                    <td><input name="title" placeholder="Add task name" required/> </td>
+                    <td><input name="status" placeholder="Add task status" required/> </td>
                     <td>
                         <input type="submit" id="add_task" value="Add task">
                     </td>

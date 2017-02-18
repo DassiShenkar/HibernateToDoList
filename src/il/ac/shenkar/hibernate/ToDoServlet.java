@@ -6,17 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-
-/**
- * Created by Arel on 05/01/2017.
- */
 @WebServlet("/ToDoServlet")
 public class ToDoServlet extends HttpServlet {
-
-    @Override
-    public void init() throws ServletException {
-
-    }
 
     HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,7 +15,7 @@ public class ToDoServlet extends HttpServlet {
         switch (request.getParameter("action")) {
             case "index":
                 HttpSession session1 = request.getSession(true);
-                if ((Boolean) session1.getAttribute("loggedIn")) {
+                if ((Boolean) session1.getAttribute("loggedIn")){
                     System.out.println("logged in");
                 }
                 view = request.getRequestDispatcher("index.jsp");
@@ -37,29 +28,31 @@ public class ToDoServlet extends HttpServlet {
                 int userID = Integer.parseInt(request.getParameter("userID"));
                 Item item = dao.getItemByID(id);
                 dao.deleteItem(item);
-                request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));//TODO: fix getUserByUserName and add a call to dao
+                request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 break;
+
             case "tasks":
                 int user_id = Integer.parseInt(request.getParameter("id"));
-                request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));//TODO: fix getUserByUserName and add a call to dao
+                request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
-            case "log_out":
+
+                case "log_out":
                 Cookie[] cookies = request.getCookies();
                 if (cookies != null) {
-                    for (int i = 0; i < cookies.length; i++) {
-                        if (cookies[i].getName().equals("logged_in")) {
-                            cookies[i].setMaxAge(0);
-                            cookies[i].setValue("");
-                            response.addCookie(cookies[i]);
-                        } else if (cookies[i].getName().equals("user_id")) {
-                            cookies[i].setMaxAge(0);
-                            cookies[i].setValue("");
-                            response.addCookie(cookies[i]);
-                        } else if (cookies[i].getName().equals("name")) {
-                            cookies[i].setMaxAge(0);
-                            cookies[i].setValue("");
-                            response.addCookie(cookies[i]);
+                    for(Cookie cookie:cookies){
+                        if (cookie.getName().equals("logged_in")) {
+                            cookie.setMaxAge(0);
+                            cookie.setValue("");
+                            response.addCookie(cookie);
+                        } else if (cookie.getName().equals("user_id")) {
+                            cookie.setMaxAge(0);
+                            cookie.setValue("");
+                            response.addCookie(cookie);
+                        } else if (cookie.getName().equals("name")) {
+                            cookie.setMaxAge(0);
+                            cookie.setValue("");
+                            response.addCookie(cookie);
                         }
                     }
                     view = request.getRequestDispatcher("index.jsp");
@@ -67,7 +60,6 @@ public class ToDoServlet extends HttpServlet {
                     request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
                     break;
                 }
-
         }
     }
 
@@ -80,13 +72,13 @@ public class ToDoServlet extends HttpServlet {
                     Cookie cookie = new Cookie("logged_in","true");
                     Cookie cookie1 = new Cookie("user_id",Integer.toString(dao.getUserIdByEmail(user)));
                     Cookie cookie2 = new Cookie("name",user.getUserName());
-                    cookie.setMaxAge(60*60*24);
-                    cookie1.setMaxAge(60*60*24);
-                    cookie2.setMaxAge(60*60*24);
+                    cookie.setMaxAge(60*60*24);   // 24 hours
+                    cookie1.setMaxAge(60*60*24);  // 24 hours
+                    cookie2.setMaxAge(60*60*24);  // 24 hours
                     response.addCookie(cookie);
                     response.addCookie(cookie1);
                     response.addCookie(cookie2);
-                    request.setAttribute("tasksList", dao.getAllItemsByUserId(Integer.parseInt(cookie1.getValue())));//TODO: fix getUserByUserName and add a call to dao
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(Integer.parseInt(cookie1.getValue())));
                     request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 }
                 else{
@@ -94,6 +86,7 @@ public class ToDoServlet extends HttpServlet {
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
                 break;
+
             case "create":
                 dao.createUser(new User(request.getParameter("email"),request.getParameter("password")));
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
@@ -105,18 +98,18 @@ public class ToDoServlet extends HttpServlet {
                 item.setStatus(request.getParameter("status"));
                 item.setTitle(request.getParameter("title"));
                 dao.updateItem(item);
-                request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));//TODO: fix getUserByUserName and add a call to dao
+                request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 break;
+
             case "addItem":
                 String status = request.getParameter("status");
                 String title = request.getParameter("title");
                 int user_id = Integer.parseInt(request.getParameter("userID"));
                 new Item(user_id,title,status);
-                request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));//TODO: fix getUserByUserName and add a call to dao
+                request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));
                 request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 break;
         }
-
     }
 }
