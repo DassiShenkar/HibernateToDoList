@@ -40,7 +40,7 @@ public class ToDoServlet extends HttpServlet {
             case "tasks":
                 int user_id = Integer.parseInt(request.getParameter("id"));
                 User user = dao.getUserById(Integer.parseInt(request.getParameter("id")));
-                if(user.getUserName().equals("administrator") && user.getPassword().equals("admin")){
+                if(user.getUsername().equals("administrator") && user.getPassword().equals("admin")){
                     request.setAttribute("tasksList", dao.getAllTasks());
                 }
                 else{
@@ -92,7 +92,7 @@ public class ToDoServlet extends HttpServlet {
                 if(exist){
                     Cookie cookie = new Cookie("logged_in","true");
                     Cookie cookie1 = new Cookie("user_id",Integer.toString(dao.getUserIdByEmail(user)));
-                    Cookie cookie2 = new Cookie("name",user.getUserName());
+                    Cookie cookie2 = new Cookie("name",user.getUsername());
                     cookie.setMaxAge(60*60*24);   // 24 hours
                     cookie1.setMaxAge(60*60*24);  // 24 hours
                     cookie2.setMaxAge(60*60*24);  // 24 hours

@@ -119,7 +119,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session = factory.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from User where USERNAME= :username");
-        query.setParameter("username",user.getUserName());
+        query.setParameter("username",user.getUsername());
         List list = query.list();
         return list.isEmpty()? false:true;
     }
@@ -129,7 +129,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session = factory.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from User where USERNAME= :username");
-        query.setParameter("username", user.getUserName());
+        query.setParameter("username", user.getUsername());
         List list = query.list();
         User tempUser = (User)list.get(0);
         return tempUser.getId();
@@ -143,7 +143,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         query.setParameter("userId", userId);
         List list = query.list();
         User user = (User)list.get(0);
-        return user.getUserName();
+        return user.getUsername();
     }
 
     @Override
