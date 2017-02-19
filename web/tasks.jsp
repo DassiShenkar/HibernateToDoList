@@ -30,22 +30,32 @@
             <%
                 String user_email = "";
                 int userID=0;
+                double time = 0;
                 Cookie[] cookies = request.getCookies();
                 if(cookies != null) {
-                    for (int i = 0; i < cookies.length; i++) {
-                        if (cookies[i].getName().equals("user_id")) {
-                            userID = Integer.parseInt(cookies[i].getValue());
+                    for(Cookie cookie : cookies){
+                    //for (int i = 0; i < cookies.length; i++) {
+                        if (cookie.getName().equals("user_id")) {
+                            userID = Integer.parseInt(cookie.getValue());
                         }
-                        else if(cookies[i].getName().equals("name")){
-                            user_email = cookies[i].getValue();
+                        else if(cookie.getName().equals("name")){
+                            user_email = cookie.getValue();
                             out.println("<h1 class='name'>Hello "+user_email+"</h1>");
+                        }
+                        else if(cookie.getName().equals("time_elapsed")){
+                            time = Double.parseDouble(cookie.getValue());
                         }
                     }
                 }
 
                 List<Item> list = (ArrayList<Item>)request.getAttribute("tasksList");
                 if(list != null && list.size() != 0){
-                    out.println("<h3>You have "+list.size()+" tasks</h3>");
+                    if(user_email.equals("administrator")){
+                        out.println("<h3>There is "+list.size()+" tasks</h3>");
+                    }
+                    else{
+                        out.println("<h3>You have "+list.size()+" tasks</h3>");
+                    }
                     for(Item item : list){
             %>
             <tr>
@@ -75,5 +85,6 @@
                 </form>
             </tr>
         </table>
+        <% if(time > 0 ) out.println("<h2>This response took " + time + " seconds</h2>"); %>
     </body>
 </html>
