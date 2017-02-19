@@ -14,8 +14,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
         <title>Insert title here</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="style.css">
-
     </head>
     <body>
         <button type="button" class="btn btn-primary" onclick="location.href='/ToDoServlet?action=log_out'">Log out</button>

@@ -10,9 +10,11 @@
 <head>
   <meta charset="utf-8">
   <title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+
 </head>
 <body>
-<p>if you re not  signed up user <a href="createUser.jsp">click here</a></p>
+<p>if you are not signed up user <a href="createUser.jsp">click here</a></p>
 <h1>
     <% Cookie[] cookies = request.getCookies();
     String logged_in = "";
