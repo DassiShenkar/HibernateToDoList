@@ -113,7 +113,7 @@ public class ToDoServlet extends HttpServlet {
                     request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 }
                 else{
-                    request.setAttribute("status", "don't exist");
+                    request.setAttribute("status", "This user don't exist");
                     seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                     seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                     response.addCookie(seconds_cookie);

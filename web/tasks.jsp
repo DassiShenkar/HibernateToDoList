@@ -8,6 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"
          pageEncoding="windows-1255" import="java.util.*,il.ac.shenkar.hibernate.Item,il.ac.shenkar.hibernate.HibernateToDoListDAO"
 %>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
@@ -19,7 +21,7 @@
         <button type="button" class="btn btn-primary" onclick="location.href='/ToDoServlet?action=log_out'">Log out</button>
         <table class="table table-striped table-bordered">
             <tr>
-                <th>Username</th>
+                <th>userName</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Status</th>
@@ -34,10 +36,21 @@
                     for(Cookie cookie : cookies){
                         if (cookie.getName().equals("user_id")) {
                             userID = Integer.parseInt(cookie.getValue());
+
+
+
                         }
                         else if(cookie.getName().equals("name")){
+
                             user_email = cookie.getValue();
-                            out.println("<h1 class='name'>Hello "+user_email+"</h1>");
+                            %>
+                                <jsp:useBean id="user" class="il.ac.shenkar.hibernate.User" />
+                                <jsp:setProperty name ="user" property="username" value='<%= user_email%>' />
+                            <%
+                            out.print("<h1 class='name'>Hello ");%>
+                            <jsp:getProperty name='user' property='username'/>
+                            <% out.print("</h1>");
+
                         }
                         else if(cookie.getName().equals("time_elapsed")){
                             time = Double.parseDouble(cookie.getValue());
@@ -57,7 +70,7 @@
             %>
             <tr>
                 <form method="post" action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>">
-                    <th> <%= HibernateToDoListDAO.getInstance().getNameById(item.getUserId()) %></th>
+                    <td> <%= HibernateToDoListDAO.getInstance().getNameById(item.getUserId()) %></td>
                     <td> <%= item.getId()%></td>
                     <td><input name="title" value="<%=item.getTitle()%>"/> </td>
                     <td><input name="status" value="<%=item.getStatus()%>"/> </td>
@@ -74,13 +87,13 @@
             <tr>
                 <form method="post" action="ToDoServlet?action=addItem&userID=<%= userID%>">
                     <tr>
-                        <td><%= user_email%></td>
-                        <td>id</td>
-                        <td><input name="title" placeholder="Add task name" required/> </td>
-                        <td><input name="status" placeholder="Add task status" required/> </td>
-                        <td>
+                        <th><%= user_email%></th>
+                        <th>id</th>
+                        <th><input name="title" placeholder="Add task name" required/> </th>
+                        <th><input name="status" placeholder="Add task status" required/> </th>
+                        <th>
                             <input type="submit" id="add_task" value="Add task">
-                        </td>
+                        </th>
                     </tr>
                 </form>
             </tr>
