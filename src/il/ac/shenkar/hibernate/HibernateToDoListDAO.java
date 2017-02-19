@@ -142,7 +142,8 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         Query query = session.createQuery("from User where ID= :userId");
         query.setParameter("userId", userId);
         List list = query.list();
-        return (String)list.get(1);
+        User user = (User)list.get(0);
+        return user.getUserName();
     }
 
     @Override

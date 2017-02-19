@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=windows-1255"
-         pageEncoding="windows-1255" import="java.util.*,il.ac.shenkar.hibernate.Item"
+         pageEncoding="windows-1255" import="java.util.*,il.ac.shenkar.hibernate.Item,il.ac.shenkar.hibernate.HibernateToDoListDAO"
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,6 +21,7 @@
         <button type="button" class="btn btn-primary" onclick="location.href='/ToDoServlet?action=log_out'">Log out</button>
         <table class="table table-striped table-bordered">
             <tr>
+                <th>Username</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Status</th>
@@ -49,6 +50,7 @@
             %>
             <tr>
                 <form method="post" action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>">
+                    <td> <%= HibernateToDoListDAO.getInstance().getNameById(item.getUserId()) %></td>
                     <td> <%= item.getId()%></td>
                     <td><input name="title" value="<%=item.getTitle()%>"/> </td>
                     <td><input name="status" value="<%=item.getStatus()%>"/> </td>

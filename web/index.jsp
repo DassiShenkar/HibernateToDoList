@@ -1,5 +1,6 @@
 
 <%@ page import="il.ac.shenkar.hibernate.HibernateToDoListDAO" %>
+<%@ page import="il.ac.shenkar.hibernate.User" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,11 @@
             }
         }
         if(logged_in.equals("true") && id != ""){
-            request.setAttribute("tasksList", HibernateToDoListDAO.getInstance().getAllItemsByUserId(Integer.parseInt(id)));
+            User user = HibernateToDoListDAO.getInstance().getUserById(Integer.parseInt(id));
+            if(user.getUserName().equals("administrator"))
+                request.setAttribute("tasksList", HibernateToDoListDAO.getInstance().getAllTasks());
+            else
+                request.setAttribute("tasksList", HibernateToDoListDAO.getInstance().getAllItemsByUserId(Integer.parseInt(id)));
             request.getRequestDispatcher("/tasks.jsp").forward(request, response);
         }
     }
