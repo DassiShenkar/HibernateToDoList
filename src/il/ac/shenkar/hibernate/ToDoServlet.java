@@ -69,10 +69,10 @@ public class ToDoServlet extends HttpServlet {
                             response.addCookie(cookie);
                         }
                     }
-                    view = request.getRequestDispatcher("index.jsp");
                     seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                     seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                     response.addCookie(seconds_cookie);
+                    view = request.getRequestDispatcher("index.jsp");
                     view.forward(request, response);
                     request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
                     break;
@@ -81,6 +81,7 @@ public class ToDoServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher view = null;
         Time time = Time.getInstance();
         time.startCount();
         Cookie seconds_cookie;
@@ -107,6 +108,8 @@ public class ToDoServlet extends HttpServlet {
                     seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                     seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                     response.addCookie(seconds_cookie);
+                    view = request.getRequestDispatcher("tasks.jsp");
+                    view.forward(request, response);
                     request.getRequestDispatcher("/tasks.jsp").forward(request, response);
                 }
                 else{
@@ -114,6 +117,8 @@ public class ToDoServlet extends HttpServlet {
                     seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                     seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                     response.addCookie(seconds_cookie);
+                    view = request.getRequestDispatcher("index.jsp");
+                    view.forward(request, response);
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
                 break;
@@ -150,7 +155,13 @@ public class ToDoServlet extends HttpServlet {
                 String title = request.getParameter("title");
                 int user_id = Integer.parseInt(request.getParameter("userID"));
                 new Item(user_id,title,status);
-                request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));
+                //TODO: if admin delete other's tasks, need to navigate to his all tasks page
+                if(dao.getNameById(user_id).equals("administrator")){
+                    request.setAttribute("tasksList", dao.getAllTasks());
+                }
+                else{
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));
+                }
                 seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                 seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                 response.addCookie(seconds_cookie);

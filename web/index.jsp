@@ -39,6 +39,8 @@
             Cookie seconds_cookie = new Cookie("time_elapsed",Double.toString(t.computeTime()));
             seconds_cookie.setMaxAge(60*60*24);   // 24 hours
             response.addCookie(seconds_cookie);
+            RequestDispatcher view = request.getRequestDispatcher("tasks.jsp");
+            view.forward(request, response);
             request.getRequestDispatcher("/tasks.jsp").forward(request, response);
         }
     }
@@ -48,7 +50,7 @@
 </h1>
 <form method="post" action="ToDoServlet?action=login">
   <label>Email<input type="text" name="email" required></label>
-  <label>Password<input type="password" name="password" required></label>
+  <label>Password<input type="text" name="password" required></label>
   <input type="submit" value="LogIn">
 </form>
 <h1 name="status">
@@ -59,7 +61,3 @@
 <% if(time > 0 ) out.println("<h2>This response took " + time + " seconds</h2>"); %>
 </body>
 </html>
-<%--<% long endTime = System.nanoTime();--%>
-    <%--long output = (endTime - startTime) / 1000000000;--%>
-    <%--out.println("<h4> The response took " + output + "</h4>");--%>
-<%--%>--%>

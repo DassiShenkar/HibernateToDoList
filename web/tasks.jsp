@@ -34,7 +34,6 @@
                 Cookie[] cookies = request.getCookies();
                 if(cookies != null) {
                     for(Cookie cookie : cookies){
-                    //for (int i = 0; i < cookies.length; i++) {
                         if (cookie.getName().equals("user_id")) {
                             userID = Integer.parseInt(cookie.getValue());
                         }
@@ -60,7 +59,7 @@
             %>
             <tr>
                 <form method="post" action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>">
-                    <td> <%= HibernateToDoListDAO.getInstance().getNameById(item.getUserId()) %></td>
+                    <th> <%= HibernateToDoListDAO.getInstance().getNameById(item.getUserId()) %></th>
                     <td> <%= item.getId()%></td>
                     <td><input name="title" value="<%=item.getTitle()%>"/> </td>
                     <td><input name="status" value="<%=item.getStatus()%>"/> </td>
@@ -76,15 +75,18 @@
             %>
             <tr>
                 <form method="post" action="ToDoServlet?action=addItem&userID=<%= userID%>">
-                    <td>id</td>
-                    <td><input name="title" placeholder="Add task name" required/> </td>
-                    <td><input name="status" placeholder="Add task status" required/> </td>
-                    <td>
-                        <input type="submit" id="add_task" value="Add task">
-                    </td>
+                    <tr>
+                        <td><%= user_email%></td>
+                        <td>id</td>
+                        <td><input name="title" placeholder="Add task name" required/> </td>
+                        <td><input name="status" placeholder="Add task status" required/> </td>
+                        <td>
+                            <input type="submit" id="add_task" value="Add task">
+                        </td>
+                    </tr>
                 </form>
             </tr>
         </table>
-        <% if(time > 0 ) out.println("<h2>This response took " + time + " seconds</h2>"); %>
+        <% if(time > 0 ) out.println("<h2>This response took " + time + " seconds</h2>");%>
     </body>
 </html>
