@@ -1,15 +1,15 @@
 
 <%@ page import="il.ac.shenkar.hibernate.HibernateToDoListDAO" %>
 <%@ page import="il.ac.shenkar.hibernate.User" %>
-<%@ page import="il.ac.shenkar.hibernate.TimeJava" %>
-<% TimeJava t = TimeJava.getInstance();
+<%@ page import="il.ac.shenkar.hibernate.Time" %>
+<% Time t = new Time(0,0);
     t.startCount(); %>
 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Insert title here</title>
+  <title>ToDo Log in</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
 </head>
