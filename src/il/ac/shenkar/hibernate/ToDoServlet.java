@@ -11,7 +11,7 @@ public class ToDoServlet extends HttpServlet {
 
     HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Time time = Time.getInstance();
+        Time time = new Time(0,0);
         time.startCount();
         Cookie seconds_cookie;
         RequestDispatcher view = null;
@@ -82,7 +82,7 @@ public class ToDoServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher view = null;
-        Time time = Time.getInstance();
+        Time time = new Time(0,0);
         time.startCount();
         Cookie seconds_cookie;
         switch(request.getParameter("action")){

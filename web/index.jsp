@@ -1,8 +1,8 @@
 
 <%@ page import="il.ac.shenkar.hibernate.HibernateToDoListDAO" %>
 <%@ page import="il.ac.shenkar.hibernate.User" %>
-<%@ page import="il.ac.shenkar.hibernate.Time" %>
-<% Time t = Time.getInstance();
+<%@ page import="il.ac.shenkar.hibernate.TimeJava" %>
+<% TimeJava t = TimeJava.getInstance();
     t.startCount(); %>
 
 <!DOCTYPE html>
