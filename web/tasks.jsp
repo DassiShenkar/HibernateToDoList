@@ -14,7 +14,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-        <title>Insert title here</title>
+        <title>Todo - My Tasks</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     <body>
@@ -28,7 +28,8 @@
                 <th>Actions</th>
             </tr>
             <%
-                String user_email = "";
+                String userName = "";
+                Boolean adminFlag = false;
                 int userID=0;
                 double time = 0;
                 Cookie[] cookies = request.getCookies();
@@ -36,16 +37,12 @@
                     for(Cookie cookie : cookies){
                         if (cookie.getName().equals("user_id")) {
                             userID = Integer.parseInt(cookie.getValue());
-
-
-
                         }
                         else if(cookie.getName().equals("name")){
-
-                            user_email = cookie.getValue();
+                            userName = cookie.getValue();
                             %>
                                 <jsp:useBean id="user" class="il.ac.shenkar.hibernate.User" />
-                                <jsp:setProperty name ="user" property="username" value='<%= user_email%>' />
+                                <jsp:setProperty name ="user" property="username" value='<%= userName%>' />
                             <%
                             out.print("<h1 class='name'>Hello ");%>
                             <jsp:getProperty name='user' property='username'/>
@@ -60,7 +57,8 @@
 
                 List<Item> list = (ArrayList<Item>)request.getAttribute("tasksList");
                 if(list != null && list.size() != 0){
-                    if(user_email.equals("administrator")){
+                    if(userName.equals("administrator")){
+                        adminFlag = true;
                         out.println("<h3>There is "+list.size()+" tasks</h3>");
                     }
                     else{
@@ -76,7 +74,7 @@
                     <td><input name="status" value="<%=item.getStatus()%>"/> </td>
                     <td>
                         <input type="submit" id="save_button" value="Save" class="save">
-                        <input type="button" id="delete_button" value="Delete" class="delete" onclick="location.href='/ToDoServlet?action=delete&id=<%= item.getId()%>&userID=<%= item.getUserId()%>';">
+                        <input type="button" id="delete_button" value="Delete" class="delete" onclick="location.href='/ToDoServlet?action=delete&id=<%= item.getId()%>&userID=<%= item.getUserId()%>&admin=<%= adminFlag %>';">
                     </td>
                 </form>
             </tr>
@@ -87,7 +85,7 @@
             <tr>
                 <form method="post" action="ToDoServlet?action=addItem&userID=<%= userID%>">
                     <tr>
-                        <th><%= user_email%></th>
+                        <th><%= userName%></th>
                         <th>id</th>
                         <th><input name="title" placeholder="Add task name" required/> </th>
                         <th><input name="status" placeholder="Add task status" required/> </th>
