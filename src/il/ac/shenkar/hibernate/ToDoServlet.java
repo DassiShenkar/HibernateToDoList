@@ -14,7 +14,7 @@ public class ToDoServlet extends HttpServlet {
         Time time = new Time(0,0);
         time.startCount();
         Cookie seconds_cookie;
-        RequestDispatcher view = null;
+        RequestDispatcher view;
         switch (request.getParameter("action")) {
             case "index":
                 view = request.getRequestDispatcher("index.jsp");
@@ -87,7 +87,7 @@ public class ToDoServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = null;
+        RequestDispatcher view;
         Time time = new Time(0,0);
         time.startCount();
         Cookie seconds_cookie;
@@ -135,8 +135,6 @@ public class ToDoServlet extends HttpServlet {
                 Cookie cookie = new Cookie("id",Integer.toString(usr.getId()));
                 cookie.setMaxAge(60*60*24);
                 response.addCookie(cookie);
-                //TODO: add administrator to cookies
-                // add username in tasks.jsp
                 seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                 seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                 response.addCookie(seconds_cookie);
@@ -167,7 +165,6 @@ public class ToDoServlet extends HttpServlet {
                 String title = request.getParameter("title");
                 int user_id = Integer.parseInt(request.getParameter("userID"));
                 new Item(user_id,title,status);
-                //TODO: if admin delete other's tasks, need to navigate to his all tasks page
                 if(dao.getNameById(user_id).equals("administrator")){
                     request.setAttribute("tasksList", dao.getAllTasks());
                 }

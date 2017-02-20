@@ -10,9 +10,7 @@ public class Item {
     private String status;
     private static final HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
 
-    public Item() {
-
-    }
+    public Item() {}
 
     public Item(int userId, String title, String status) {
         setUserId(userId);

@@ -2,7 +2,6 @@ package il.ac.shenkar.hibernate;
 
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -78,6 +77,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         Query query = session.createQuery("from User");
         List users = query.list();
+        //TODO: add if users is empty
         return users;
     }
 
@@ -88,8 +88,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session.beginTransaction();
         Query query = session.createQuery("from Item where userId = :userId");
         query.setParameter("userId", userId);
-        List list = query.list();
-        return list;
+        return query.list();
     }
 
     @Override
@@ -104,7 +103,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 
     @Override
     public Item getItemByID(int itemID) {
-        Item item = null;
+        Item item;
         session = factory.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from Item where ID = :itemID");
@@ -121,7 +120,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         Query query = session.createQuery("from User where USERNAME= :username");
         query.setParameter("username",user.getUsername());
         List list = query.list();
-        return list.isEmpty()? false:true;
+        return !list.isEmpty();
     }
 
     @Override
@@ -151,7 +150,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         session = factory.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from Item");
-        List list = query.list();
-        return list;
+        //List list = query.list();
+        return query.list();
     }
 }
