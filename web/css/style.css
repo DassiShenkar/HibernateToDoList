@@ -1,7 +1,15 @@
 body{
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.tasks{
+    padding:8px;
+}
+
+.index,.create{
     padding:50px;
 }
+
 .details{
     margin-top: 50px;
     width:400px;
@@ -20,7 +28,7 @@ body{
     margin: 0px auto;
 }
 
-.details p,.details h1{
+.details p, h1, h4, h5{
     text-align:center;
 }
 
@@ -31,4 +39,8 @@ body{
 .details h4{
     margin-top:15px;
     text-align:center;
+}
+
+.logOut{
+    float:right;
 }

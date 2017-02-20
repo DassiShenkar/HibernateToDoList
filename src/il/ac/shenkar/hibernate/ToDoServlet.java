@@ -145,11 +145,17 @@ public class ToDoServlet extends HttpServlet {
 
             case "editTask":
                 int userID = Integer.parseInt(request.getParameter("userID"));
+                String admin = request.getParameter("admin");
                 Item item = dao.getItemByID(Integer.parseInt(request.getParameter("id")));
                 item.setStatus(request.getParameter("status"));
                 item.setTitle(request.getParameter("title"));
                 dao.updateItem(item);
-                request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));
+                if(admin.equals("true")){
+                    request.setAttribute("tasksList", dao.getAllTasks());
+                }
+                else{
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));
+                }
                 seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                 seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                 response.addCookie(seconds_cookie);

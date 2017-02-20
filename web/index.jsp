@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
 </head>
-<body>
+<body class="index">
 <section class="details">
 
     <h1>ToDo list</h1>
