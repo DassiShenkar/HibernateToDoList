@@ -3,7 +3,7 @@ package il.ac.shenkar.hibernate;
 import javax.persistence.Id;
 
 public class Item {
-    @Id
+    @Id  // auto increment unique id
     private int id;
     private int userId;
     private String title;

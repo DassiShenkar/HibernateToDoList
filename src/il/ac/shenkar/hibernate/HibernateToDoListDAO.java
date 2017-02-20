@@ -12,7 +12,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     private SessionFactory factory;
     private Session session;
 
-    public static HibernateToDoListDAO getInstance() {
+    public static HibernateToDoListDAO getInstance() {  // singleton
         if (instance == null) {
             instance = new HibernateToDoListDAO();
         }
@@ -24,7 +24,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(User user) {  // create user using Hibernate
         session = factory.openSession();
         session.beginTransaction();
         session.save(user);
@@ -32,7 +32,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(User user) {  // delete user using Hibernate
         session = factory.openSession();
         session.beginTransaction();
         session.delete(user);
@@ -40,7 +40,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(User user) {  // update user using Hibernate
         session = factory.openSession();
         session.beginTransaction();
         session.update(user);
@@ -48,7 +48,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void addItem(Item item) {
+    public void addItem(Item item) {  // add item and attach it to existing user
         session = factory.openSession();
         session.beginTransaction();
         session.save(item);
@@ -56,7 +56,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void updateItem(Item item) {
+    public void updateItem(Item item) {  // update item
         session = factory.openSession();
         session.beginTransaction();
         session.update(item);
@@ -64,7 +64,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void deleteItem(Item item) {
+    public void deleteItem(Item item) {  // delete item
         session = factory.openSession();
         session.beginTransaction();
         session.delete(item);
@@ -72,7 +72,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() {  // get all users from the database
         session = factory.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from User");
@@ -114,13 +114,13 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public boolean checkIfUserExists(User user) {
+    public boolean checkIfUserExists(User user) {  // return if user exist in the database or not
         session = factory.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from User where USERNAME= :username");
         query.setParameter("username",user.getUsername());
         List list = query.list();
-        return !list.isEmpty();
+        return !list.isEmpty();  // true if user exist
     }
 
     @Override

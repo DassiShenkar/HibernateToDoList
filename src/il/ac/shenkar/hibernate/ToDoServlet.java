@@ -12,17 +12,18 @@ public class ToDoServlet extends HttpServlet {
     HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Time time = new Time(0,0);
-        time.startCount();
+        time.startCount();  // start count time for response
         Cookie seconds_cookie;
         RequestDispatcher view;
         switch (request.getParameter("action")) {
+
             case "index":
                 view = request.getRequestDispatcher("index.jsp");
-                seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
+                seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));  // response time
                 seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                 response.addCookie(seconds_cookie);
                 view.forward(request, response);
-                request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);  // move to index page
                 break;
 
             case "delete":
@@ -30,35 +31,35 @@ public class ToDoServlet extends HttpServlet {
                 int userID = Integer.parseInt(request.getParameter("userID"));
                 String admin = request.getParameter("admin");
                 Item item = dao.getItemByID(id);
-                dao.deleteItem(item);
-                if(admin.equals("true")){
-                    request.setAttribute("tasksList", dao.getAllTasks());
+                dao.deleteItem(item);  // delete the item from the database
+                if(admin.equals("true")){  // check if admin logged in
+                    request.setAttribute("tasksList", dao.getAllTasks());  // if admin, return all tasks
                 }
                 else{
-                    request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));  // if not admin return user tasks
                 }
                 seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
-                seconds_cookie.setMaxAge(60*60*24);   // 24 hours
-                response.addCookie(seconds_cookie);
-                request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                seconds_cookie.setMaxAge(60*60*24);  // 24 hours
+                response.addCookie(seconds_cookie);  // add cookie for response time
+                request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
                 break;
 
             case "tasks":
                 int user_id = Integer.parseInt(request.getParameter("id"));
                 User user = dao.getUserById(Integer.parseInt(request.getParameter("id")));
-                if(user.getUsername().equals("administrator") && user.getPassword().equals("admin")){
-                    request.setAttribute("tasksList", dao.getAllTasks());
+                if(user.getUsername().equals("administrator") && user.getPassword().equals("admin")){  // check if admin logged in
+                    request.setAttribute("tasksList", dao.getAllTasks());  // get all tasks
                 }
                 else{
-                    request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));  // get tasks by user id
                 }
                 seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
-                seconds_cookie.setMaxAge(60*60*24);   // 24 hours
-                response.addCookie(seconds_cookie);
-                request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                seconds_cookie.setMaxAge(60*60*24);  // 24 hours
+                response.addCookie(seconds_cookie);  // add cookie for response time
+                request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
 
                 case "log_out":
-                Cookie[] cookies = request.getCookies();
+                Cookie[] cookies = request.getCookies();  // delete all cookies used by the servlet because of the log out
                 if (cookies != null) {
                     for(Cookie cookie:cookies){
                         if (cookie.getName().equals("logged_in")) {
@@ -77,10 +78,10 @@ public class ToDoServlet extends HttpServlet {
                     }
                     seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                     seconds_cookie.setMaxAge(60*60*24);   // 24 hours
-                    response.addCookie(seconds_cookie);
+                    response.addCookie(seconds_cookie);   // add cookie for response time
                     view = request.getRequestDispatcher("index.jsp");
                     view.forward(request, response);
-                    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response); // move to index page
                     break;
                 }
         }
@@ -89,13 +90,14 @@ public class ToDoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher view;
         Time time = new Time(0,0);
-        time.startCount();
+        time.startCount();  // start measure time
         Cookie seconds_cookie;
         switch(request.getParameter("action")){
+
             case "login":
                 User user = new User(request.getParameter("email"),request.getParameter("password"));
                 boolean exist = dao.checkIfUserExists(user);
-                if(exist){
+                if(exist){  // user is already in the database
                     Cookie cookie = new Cookie("logged_in","true");
                     Cookie cookie1 = new Cookie("user_id",Integer.toString(dao.getUserIdByEmail(user)));
                     Cookie cookie2 = new Cookie("name",user.getUsername());
@@ -116,16 +118,16 @@ public class ToDoServlet extends HttpServlet {
                     response.addCookie(seconds_cookie);
                     view = request.getRequestDispatcher("tasks.jsp");
                     view.forward(request, response);
-                    request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                    request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
                 }
                 else{
-                    request.setAttribute("status", "This user don't exist");
+                    request.setAttribute("status", "This user don't exist");  // return to client that user not exist
                     seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                     seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                     response.addCookie(seconds_cookie);
                     view = request.getRequestDispatcher("index.jsp");
                     view.forward(request, response);
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);  // move to index page
                 }
                 break;
 
@@ -138,7 +140,7 @@ public class ToDoServlet extends HttpServlet {
                 seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                 seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                 response.addCookie(seconds_cookie);
-                request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
                 break;
 
             case "editTask":
@@ -147,17 +149,17 @@ public class ToDoServlet extends HttpServlet {
                 Item item = dao.getItemByID(Integer.parseInt(request.getParameter("id")));
                 item.setStatus(request.getParameter("status"));
                 item.setTitle(request.getParameter("title"));
-                dao.updateItem(item);
+                dao.updateItem(item);  // update the task in the database
                 if(admin.equals("true")){
-                    request.setAttribute("tasksList", dao.getAllTasks());
+                    request.setAttribute("tasksList", dao.getAllTasks());  // if admin is logged in return all tasks
                 }
                 else{
-                    request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));// return tasks by user
                 }
                 seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                 seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                 response.addCookie(seconds_cookie);
-                request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
                 break;
 
             case "addItem":
@@ -165,16 +167,16 @@ public class ToDoServlet extends HttpServlet {
                 String title = request.getParameter("title");
                 int user_id = Integer.parseInt(request.getParameter("userID"));
                 new Item(user_id,title,status);
-                if(dao.getNameById(user_id).equals("administrator")){
+                if(dao.getNameById(user_id).equals("administrator")){  // if admin is true, get all tasks
                     request.setAttribute("tasksList", dao.getAllTasks());
                 }
                 else{
-                    request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));
+                    request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));  // get tasks by user id
                 }
                 seconds_cookie = new Cookie("time_elapsed",Double.toString(time.computeTime()));
                 seconds_cookie.setMaxAge(60*60*24);   // 24 hours
                 response.addCookie(seconds_cookie);
-                request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
                 break;
         }
     }

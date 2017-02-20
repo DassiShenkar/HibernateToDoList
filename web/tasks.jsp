@@ -34,22 +34,22 @@
                         }
                         else if(cookie.getName().equals("name")){
                             userName = cookie.getValue();
-                            %>
+                %>
                                 <jsp:useBean id="user" class="il.ac.shenkar.hibernate.User" />
                                 <jsp:setProperty name ="user" property="username" value='<%= userName%>' />
-                            <%
+                <%
                         }
                         else if(cookie.getName().equals("time_elapsed")){
                             time = Double.parseDouble(cookie.getValue());
                         }
                     }
                 }
-
                 List<Item> list = (ArrayList<Item>)request.getAttribute("tasksList");
                 if(list != null && list.size() != 0){
-                    out.print("<h2 class='name'>Hello ");%>
+                    out.print("<h2 class='name'>Hello ");
+                %>
                     <jsp:getProperty name='user' property='username'/>
-            <%
+                <%
                     if(userName.equals("administrator")){
                         adminFlag = true;
                         out.println(", There is "+list.size()+" tasks</h2>");
@@ -58,7 +58,7 @@
                         out.println(", You have "+list.size()+" tasks</h2>");
                     }
                     for(Item item : list){
-            %>
+                %>
             <tr>
                 <form method="post" action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>&admin=<%= adminFlag %>">
                     <td> <%= HibernateToDoListDAO.getInstance().getNameById(item.getUserId()) %></td>
