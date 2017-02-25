@@ -1,8 +1,13 @@
 package il.ac.shenkar.hibernate;
 
-public class ToiListException extends Exception {
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
+public class ToiListException extends Exception {
+    private Logger logger;
     public ToiListException() {
+        logger = Logger.getLogger(ToiListException.class);
+        BasicConfigurator.configure();
     }
 
     public ToiListException(String message) {

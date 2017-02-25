@@ -1,8 +1,9 @@
 package il.ac.shenkar.hibernate;
 
 import javax.persistence.Id;
+import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-public class Item {
+public class Item extends SimpleTagSupport {
     @Id  // auto increment unique id
     private int id;
     private int userId;

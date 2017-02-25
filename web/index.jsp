@@ -19,7 +19,6 @@
             <%  Cookie[] cookies = request.getCookies();
                 String logged_in = "";
                 String id = "";
-                double time = 0;
                 if(cookies != null) {
                     for(Cookie cookie : cookies){
                         if (cookie.getName().equals("logged_in")){
@@ -27,9 +26,6 @@
                         }
                         else if (cookie.getName().equals("user_id")){
                             id = cookie.getValue();
-                        }
-                        else if(cookie.getName().equals("time_elapsed")){
-                            time = Double.parseDouble(cookie.getValue());
                         }
                     }
                     if(logged_in.equals("true") && !id.equals("")){
@@ -65,7 +61,6 @@
                 %>
                 <%= name %>
             </h4>
-            <% if(time > 0 ) out.println("<h4>This response took " + time + " seconds</h4>"); %>
         </section>
     </body>
 </html>
