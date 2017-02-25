@@ -131,14 +131,10 @@ public class ToDoServlet extends HttpServlet {
                         request.setAttribute("tasksList", dao.getAllItemsByUserId(Integer.parseInt(cookie1.getValue())));
                     }
                     responseTime = Double.toString(time.computeTime());
-
-                    request.setAttribute("userID", Integer.toString(dao.getUserIdByEmail(user)));
+                    request.setAttribute("userID",dao.getUserIdByEmail(user));
                     request.setAttribute("userName", user.getUsername());
                     request.setAttribute("tasksSize", dao.getAllTasks().size());
                     request.setAttribute("time", responseTime);
-
-
-
                     seconds_cookie = new Cookie("time_elapsed", responseTime);
                     seconds_cookie.setMaxAge(60 * 60 * 24);   // 24 hours
                     logger.info("response time for login: " + responseTime);
@@ -158,9 +154,11 @@ public class ToDoServlet extends HttpServlet {
             case "create":
                 User usr = new User(request.getParameter("email"), request.getParameter("password"));
                 dao.createUser(usr);
-                Cookie cookie = new Cookie("id", Integer.toString(usr.getId()));
+                Cookie cookie = new Cookie("user_id", Integer.toString(usr.getId()));
                 cookie.setMaxAge(60 * 60 * 24);
                 response.addCookie(cookie);
+                request.setAttribute("userID", (usr.getId()));
+                request.setAttribute("userName", usr.getUsername());
                 responseTime = Double.toString(time.computeTime());
                 seconds_cookie = new Cookie("time_elapsed", responseTime);
                 seconds_cookie.setMaxAge(60 * 60 * 24);   // 24 hours
@@ -199,6 +197,8 @@ public class ToDoServlet extends HttpServlet {
                 } else {
                     request.setAttribute("tasksList", dao.getAllItemsByUserId(user_id));  // get tasks by user id
                 }
+                request.setAttribute("userID", user_id);
+                request.setAttribute("userName", dao.getUserById(user_id).getUsername());
                 responseTime = Double.toString(time.computeTime());
                 seconds_cookie = new Cookie("time_elapsed", responseTime);
                 seconds_cookie.setMaxAge(60 * 60 * 24);   // 24 hours

@@ -117,8 +117,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     public boolean checkIfUserExists(User user) {  // return if user exist in the database or not
         session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from User where USERNAME= :username");
+        Query query = session.createQuery("from User where USERNAME= :username and ID= :id");
         query.setParameter("username",user.getUsername());
+        query.setParameter("id",user.getId());
         List list = query.list();
         return !list.isEmpty();  // true if user exist
     }

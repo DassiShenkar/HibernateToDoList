@@ -41,6 +41,9 @@
                         }
                     }
                 }
+                else{
+                    userID = (Integer)request.getAttribute("userID");
+                }
             %>
             <jsp:useBean id="user" class="il.ac.shenkar.hibernate.User"/>
             <jsp:setProperty name="user" property="username" value='<%= userName%>'/>
