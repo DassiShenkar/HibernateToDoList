@@ -1,6 +1,6 @@
-<%@ page import="il.ac.shenkar.hibernate.HibernateToDoListDAO" %>
-<%@ page import="il.ac.shenkar.hibernate.User" %>
-<%@ page import="il.ac.shenkar.hibernate.Time" %>
+<%@ page import="il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO" %>
+<%@ page import="il.ac.shenkar.hibernate.model.User" %>
+<%@ page import="il.ac.shenkar.hibernate.controller.utils.Time" %>
 <% Time t = new Time(0,0);
     t.startCount();
 %>

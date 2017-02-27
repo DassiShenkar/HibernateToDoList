@@ -1,5 +1,10 @@
-package il.ac.shenkar.hibernate;
+package il.ac.shenkar.hibernate.controller;
 
+import il.ac.shenkar.hibernate.controller.utils.Time;
+import il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO;
+import il.ac.shenkar.hibernate.model.Item;
+import il.ac.shenkar.hibernate.model.dao.ToiListException;
+import il.ac.shenkar.hibernate.model.User;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import java.io.IOException;
@@ -200,7 +205,7 @@ public class ToDoServlet extends HttpServlet {
                     String status = request.getParameter("status");
                     String title = request.getParameter("title");
                     int user_id = Integer.parseInt(request.getParameter("userID"));
-                    new Item(user_id, title, status);
+                    dao.addItem(new Item(user_id, title, status));
                     if (dao.getNameById(user_id).equals("administrator")) {  // if admin is true, get all tasks
                         request.setAttribute("tasksList", dao.getAllTasks());
                     } else {

@@ -1,4 +1,4 @@
-package il.ac.shenkar.hibernate
+package il.ac.shenkar.hibernate.controller.utils
 
 class Time(var startTime: Long = 0, var endTime: Long = 0) {
   def startCount(): Unit = {

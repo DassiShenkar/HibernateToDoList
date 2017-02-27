@@ -1,4 +1,7 @@
-package il.ac.shenkar.hibernate;
+package il.ac.shenkar.hibernate.model;
+
+import il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO;
+import il.ac.shenkar.hibernate.model.dao.ToiListException;
 
 import java.sql.*;
 

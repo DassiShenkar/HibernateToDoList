@@ -1,5 +1,8 @@
-package il.ac.shenkar.hibernate;
+package il.ac.shenkar.hibernate.model.dao;
 
+
+import il.ac.shenkar.hibernate.model.Item;
+import il.ac.shenkar.hibernate.model.User;
 
 import java.util.List;
 

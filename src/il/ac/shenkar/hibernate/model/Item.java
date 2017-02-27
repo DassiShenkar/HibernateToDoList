@@ -1,22 +1,33 @@
-package il.ac.shenkar.hibernate;
+package il.ac.shenkar.hibernate.model;
 
-import javax.persistence.Id;
+import il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO;
+import il.ac.shenkar.hibernate.model.dao.ToiListException;
 
+
+import javax.persistence.*;
+
+
+@Table(name = "ITEMS")
 public class Item{
     @Id  // auto increment unique id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+    @Column(name="USERID")
     private int userId;
+    @Column(name="TITLE")
     private String title;
+    @Column(name="STATUS")
     private String status;
     private static final HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
 
     public Item() {}
 
-    public Item(int userId, String title, String status) throws ToiListException{
+    public Item(int userId, String title, String status) throws ToiListException {
         setUserId(userId);
         setTitle(title);
         setStatus(status);
-        dao.addItem(this);
+        //dao.addItem(this);
     }
 
     /**

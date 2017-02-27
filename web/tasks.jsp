@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"
          pageEncoding="windows-1255"
-         import="java.util.*,il.ac.shenkar.hibernate.Item,il.ac.shenkar.hibernate.HibernateToDoListDAO"
+         import="java.util.*,il.ac.shenkar.hibernate.model.Item,il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO"
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -45,7 +45,7 @@
                     userID = (Integer)request.getAttribute("userID");
                 }
             %>
-            <jsp:useBean id="user" class="il.ac.shenkar.hibernate.User"/>
+            <jsp:useBean id="user" class="il.ac.shenkar.hibernate.model.User"/>
             <jsp:setProperty name="user" property="username" value='<%= userName%>'/>
             <%
                 List<Item> list = (ArrayList<Item>) request.getAttribute("tasksList");

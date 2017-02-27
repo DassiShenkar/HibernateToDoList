@@ -1,12 +1,20 @@
-package il.ac.shenkar.hibernate;
+package il.ac.shenkar.hibernate.model;
 
-import javax.persistence.Id;
+import il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO;
+import il.ac.shenkar.hibernate.model.dao.ToiListException;
+
+import javax.persistence.*;
 import java.util.List;
 
+@Table(name = "USERS")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+    @Column(name = "USERNAME")
     private String username;
+    @Column(name = "PASSWORD")
     private String password;
     private static final HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
 
@@ -43,7 +51,7 @@ public class User {
         this.password = password;
     }
 
-    public void addItem(String itemName, String itemStatus) throws ToiListException{
+    public void addItem(String itemName, String itemStatus) throws ToiListException {
         Item item = new Item(getId(), itemName, itemStatus);
     }
 

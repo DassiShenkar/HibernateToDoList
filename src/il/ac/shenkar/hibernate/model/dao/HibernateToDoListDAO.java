@@ -1,6 +1,9 @@
-package il.ac.shenkar.hibernate;
+package il.ac.shenkar.hibernate.model.dao;
 
 import java.util.List;
+
+import il.ac.shenkar.hibernate.model.Item;
+import il.ac.shenkar.hibernate.model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;

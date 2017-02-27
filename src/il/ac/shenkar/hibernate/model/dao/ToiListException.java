@@ -1,4 +1,4 @@
-package il.ac.shenkar.hibernate;
+package il.ac.shenkar.hibernate.model.dao;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;

@@ -5,7 +5,7 @@
          version="3.1">
     <servlet>
         <servlet-name>ToDoServlet</servlet-name>
-        <servlet-class>il.ac.shenkar.hibernate.ToDoServlet</servlet-class>
+        <servlet-class>il.ac.shenkar.hibernate.controller.ToDoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ToDoServlet</servlet-name>
