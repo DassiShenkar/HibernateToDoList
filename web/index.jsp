@@ -1,6 +1,7 @@
 <%@ page import="il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO" %>
 <%@ page import="il.ac.shenkar.hibernate.model.User" %>
 <%@ page import="il.ac.shenkar.hibernate.controller.utils.Time" %>
+<%@ page import="il.ac.shenkar.hibernate.model.dao.ToiListException" %>
 <% Time t = new Time(0,0);
     t.startCount();
 %>
@@ -29,17 +30,22 @@
                         }
                     }
                     if(logged_in.equals("true") && !id.equals("")){
-                        User user = HibernateToDoListDAO.getInstance().getUserById(Integer.parseInt(id));
-                        if(user.getUsername().equals("administrator"))
-                            request.setAttribute("tasksList", HibernateToDoListDAO.getInstance().getAllTasks());
-                        else
-                            request.setAttribute("tasksList", HibernateToDoListDAO.getInstance().getAllItemsByUserId(Integer.parseInt(id)));
-                        Cookie seconds_cookie = new Cookie("time_elapsed",Double.toString(t.computeTime()));
-                        seconds_cookie.setMaxAge(60*60*24);   // 24 hours
-                        response.addCookie(seconds_cookie);
-                        RequestDispatcher view = request.getRequestDispatcher("tasks.jsp");
-                        view.forward(request, response);
-                        request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                        try {
+                            User user = HibernateToDoListDAO.getInstance().getUserById(Integer.parseInt(id));
+                            if (user.getUsername().equals("administrator"))
+                                request.setAttribute("tasksList", HibernateToDoListDAO.getInstance().getAllTasks());
+                            else
+                                request.setAttribute("tasksList", HibernateToDoListDAO.getInstance().getAllItemsByUserId(Integer.parseInt(id)));
+                            Cookie seconds_cookie = new Cookie("time_elapsed", Double.toString(t.computeTime()));
+                            seconds_cookie.setMaxAge(60 * 60 * 24);   // 24 hours
+                            response.addCookie(seconds_cookie);
+                            RequestDispatcher view = request.getRequestDispatcher("tasks.jsp");
+                            view.forward(request, response);
+                            request.getRequestDispatcher("/tasks.jsp").forward(request, response);
+                        }
+                        catch(ToiListException e){
+                            e.printStackTrace();
+                        }
                     }
                 }
             %>

@@ -8,45 +8,41 @@ import javax.persistence.*;
 
 
 @Table(name = "ITEMS")
-public class Item{
-    @Id  // auto increment unique id
+public class Item {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private int id;
-    @Column(name="USERID")
+    @Column(name = "USERID")
     private int userId;
-    @Column(name="TITLE")
+    @Column(name = "TITLE")
     private String title;
-    @Column(name="STATUS")
+    @Column(name = "STATUS")
     private String status;
-    private static final HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
 
-    public Item() {}
+    public Item() {
+    }
 
     public Item(int userId, String title, String status) throws ToiListException {
         setUserId(userId);
         setTitle(title);
         setStatus(status);
-        //dao.addItem(this);
     }
 
     /**
-     *
      * @return id use for
      */
     public int getId() {
         return id;
     }
 
-    private void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id;}
 
     public int getUserId() {
         return userId;
     }
 
-//    /**
+    //    /**
 //     * This function
 //     * @param userId id of
 //     * @param
@@ -72,11 +68,6 @@ public class Item{
     public void setStatus(String itemStatus) {
         this.status = itemStatus;
     }
-
-//    public void updateStatus(String status) throws ToiListException{
-//        setStatus(status);
-//        dao.updateItem(this);
-//    }
 
     @Override
     public String toString() {

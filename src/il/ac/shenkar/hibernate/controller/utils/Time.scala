@@ -2,7 +2,7 @@ package il.ac.shenkar.hibernate.controller.utils
 
 class Time(var startTime: Long = 0, var endTime: Long = 0) {
   def startCount(): Unit = {
-    startTime = System.nanoTime(); // start counter the time
+    startTime = System.nanoTime(); // start counter
   }
   def computeTime: Double = {
     endTime = System.nanoTime

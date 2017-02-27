@@ -16,7 +16,6 @@ public class User {
     private String username;
     @Column(name = "PASSWORD")
     private String password;
-    private static final HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
 
     public User() {
         super();
@@ -31,9 +30,7 @@ public class User {
         return id;
     }
 
-    private void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id;}
 
     public String getUsername() {
         return username;
@@ -49,18 +46,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void addItem(String itemName, String itemStatus) throws ToiListException {
-        Item item = new Item(getId(), itemName, itemStatus);
-    }
-
-    public void deleteItem(Item item) throws ToiListException{
-        dao.deleteItem(item);
-    }
-
-    public List<Item> getItems() throws ToiListException{
-        return dao.getAllItemsByUserId(getId());
     }
 
     @Override

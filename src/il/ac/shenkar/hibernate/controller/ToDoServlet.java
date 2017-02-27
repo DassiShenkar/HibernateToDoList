@@ -7,6 +7,7 @@ import il.ac.shenkar.hibernate.model.dao.ToiListException;
 import il.ac.shenkar.hibernate.model.User;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class ToDoServlet extends HttpServlet {
         BasicConfigurator.configure();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Time time = new Time(0, 0);
         time.startCount();  // start count time for response
         Cookie seconds_cookie;
@@ -33,15 +34,6 @@ public class ToDoServlet extends HttpServlet {
             switch (request.getParameter("action")) {
 
                 case "index":
-                    view = request.getRequestDispatcher("index.jsp");
-                    responseTime = Double.toString(time.computeTime());
-                    seconds_cookie = new Cookie("time_elapsed", responseTime);  // response time
-                    seconds_cookie.setMaxAge(60 * 60 * 24);   // 24 hours
-                    response.addCookie(seconds_cookie);
-                    logger.info("response time for index page: " + responseTime);
-                    view.forward(request, response);
-                    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);  // move to index page
-                    break;
 
                 case "delete":
                     int id = Integer.parseInt(request.getParameter("id"));
@@ -58,6 +50,8 @@ public class ToDoServlet extends HttpServlet {
                     seconds_cookie = new Cookie("time_elapsed", responseTime);
                     seconds_cookie.setMaxAge(60 * 60 * 24);  // 24 hours
                     logger.info("response time for deletion: " + responseTime);
+                    request.setAttribute("userName",dao.getNameById(userID));
+                    request.setAttribute("userID",userID);
                     response.addCookie(seconds_cookie);  // add cookie for response time
                     request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
                     break;
@@ -108,10 +102,9 @@ public class ToDoServlet extends HttpServlet {
                         break;
                     }
             }
-        }
-        catch(ToiListException e){
-            logger.error("Error in doGet",e);
-            request.setAttribute("exception",e.getMessage());
+        } catch (ToiListException e) {
+            logger.error("Error in doGet", e);
+            request.setAttribute("exception", e.getMessage());
             view = request.getRequestDispatcher("error.jsp");
             view.forward(request, response);
             request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response); // move to index page
@@ -121,11 +114,10 @@ public class ToDoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher view;
         Time time = new Time(0, 0);
-        time.startCount();  // start measure time
+        time.startCount();  // start counter
         Cookie seconds_cookie;
         try {
             switch (request.getParameter("action")) {
-
                 case "login":
                     User user = new User(request.getParameter("email"), request.getParameter("password"));
                     boolean exist = dao.checkIfUserExists(user);
@@ -221,13 +213,13 @@ public class ToDoServlet extends HttpServlet {
                     request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
                     break;
             }
-        }
-        catch(ToiListException e){
-            logger.error("Error in doPost",e);
-            request.setAttribute("exception",e.getMessage());
+        } catch (ToiListException e) {
+            logger.error("Error in doPost", e);
+            request.setAttribute("exception", e.getMessage());
             view = request.getRequestDispatcher("error.jsp");
             view.forward(request, response);
             request.getRequestDispatcher("/WEB-INF/error.jsp").forward(request, response); // move to index page
         }
     }
 }
+

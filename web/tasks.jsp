@@ -2,6 +2,8 @@
          pageEncoding="windows-1255"
          import="java.util.*,il.ac.shenkar.hibernate.model.Item,il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO"
 %>
+<%@ page import="il.ac.shenkar.hibernate.model.dao.IToDoListDAO" %>
+<%@ page import="il.ac.shenkar.hibernate.model.dao.ToiListException" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -50,40 +52,40 @@
             <%
                 List<Item> list = (ArrayList<Item>) request.getAttribute("tasksList");
                 if (list != null && list.size() != 0) {
-                    out.print("<h2 class='name'>Hello ");
-                    if (!userName.equals("")) {
-            %>
-            <jsp:getProperty name='user' property='username'/>
-            <%
-                }
-                if (userName.equals("administrator")) {
-                    adminFlag = true;
-                    out.println(", There is " + list.size() + " tasks</h2>");
-                } else {
-                    out.println(", You have " + list.size() + " tasks</h2>");
-                }
-                for (Item item : list) {
-            %>
-            <tr>
-                <form method="post"
-                      action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>&admin=<%= adminFlag %>">
-                    <td><%= HibernateToDoListDAO.getInstance().getNameById(item.getUserId()) %>
-                    </td>
-                    <td><%= item.getId()%>
-                    </td>
-                    <td><input name="title" value="<%=item.getTitle()%>"/></td>
-                    <td><input name="status" value="<%=item.getStatus()%>"/></td>
-                    <td>
-                        <button type="submit" id="update_button" class="btn btn-success">Update</button>
-                        <button type="button" id="delete_button" value="Delete" class="btn btn-danger"
-                                onclick="location.href='/ToDoServlet?action=delete&id=<%= item.getId()%>&userID=<%= item.getUserId()%>&admin=<%= adminFlag %>';">
-                            Delete
-                        </button>
-                    </td>
-                </form>
-            </tr>
-            <%
+                        out.print("<h2 class='name'>Hello ");
+                        if (!userName.equals("")) {
+                %>
+                <jsp:getProperty name='user' property='username'/>
+                <%
                     }
+                    if (userName.equals("administrator")) {
+                        adminFlag = true;
+                        out.println(", There is " + list.size() + " tasks</h2>");
+                    } else {
+                        out.println(", You have " + list.size() + " tasks</h2>");
+                    }
+                    for (Item item : list) {
+                %>
+                <tr>
+                    <form method="post"
+                          action="ToDoServlet?action=editTask&id=<%= item.getId()%>&userID=<%= item.getUserId()%>&admin=<%= adminFlag %>">
+                        <td><%= HibernateToDoListDAO.getInstance().getNameById(item.getUserId()) %>
+                        </td>
+                        <td><%= item.getId()%>
+                        </td>
+                        <td><input name="title" value="<%=item.getTitle()%>"/></td>
+                        <td><input name="status" value="<%=item.getStatus()%>"/></td>
+                        <td>
+                            <button type="submit" id="update_button" class="btn btn-success">Update</button>
+                            <button type="button" id="delete_button" value="Delete" class="btn btn-danger"
+                                    onclick="location.href='/ToDoServlet?action=delete&id=<%= item.getId()%>&userID=<%= item.getUserId()%>&admin=<%= adminFlag %>';">
+                                Delete
+                            </button>
+                        </td>
+                    </form>
+                </tr>
+                <%
+                        }
                 }
 
             %>

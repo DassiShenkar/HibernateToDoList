@@ -10,9 +10,7 @@
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-        <!--<mapping resource="il/ac/shenkar/hibernate/User.hbm.xml"/>-->
         <mapping class="il.ac.shenkar.hibernate.model.User"/>
-        <!--<mapping resource="il/ac/shenkar/hibernate/Item.hbm.xml"/>-->
         <mapping class="il.ac.shenkar.hibernate.model.Item"/>
     </session-factory>
 </hibernate-configuration>
