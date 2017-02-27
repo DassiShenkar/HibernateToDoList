@@ -2,7 +2,6 @@ package il.ac.shenkar.hibernate;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

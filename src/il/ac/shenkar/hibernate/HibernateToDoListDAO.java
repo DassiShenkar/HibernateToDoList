@@ -1,5 +1,8 @@
 package il.ac.shenkar.hibernate;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -102,6 +105,25 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
+    public Boolean checkIfDBExist() {
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306", "todo", "1234");
+            ResultSet resultSet = conn.getMetaData().getCatalogs();
+            while (resultSet.next()) {
+                String databaseName = resultSet.getString(1);                // Get the database name, which is at position 1
+                if(databaseName.equals("todo")){
+                    return true;
+                }
+
+            }
+            return true;
+        }
+        catch(Exception SQLException){
+            return false;
+        }
+    }
+
+    @Override
     public Item getItemByID(int itemID) {
         Item item;
         session = factory.openSession();
@@ -117,9 +139,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     public boolean checkIfUserExists(User user) {  // return if user exist in the database or not
         session = factory.openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from User where USERNAME= :username and ID= :id");
+        Query query = session.createQuery("from User where USERNAME= :username and PASSWORD= :password");
         query.setParameter("username",user.getUsername());
-        query.setParameter("id",user.getId());
+        query.setParameter("password",user.getPassword());
         List list = query.list();
         return !list.isEmpty();  // true if user exist
     }

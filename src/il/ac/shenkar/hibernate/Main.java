@@ -1,7 +1,9 @@
 package il.ac.shenkar.hibernate;
 
-public class Main {
-    public static void main(String []args){
+import java.sql.*;
+
+public class Main{
+    public static void main(String []args) throws SQLException,ClassNotFoundException {
         HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
         User user = new User("lifemichael","life");
         Item item = new Item(user.getId(),"Learn to java EE exam","Waiting");

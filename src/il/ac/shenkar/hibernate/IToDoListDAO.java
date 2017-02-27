@@ -28,6 +28,8 @@ public interface IToDoListDAO {
 
      User getUserById(int userID);
 
+     Boolean checkIfDBExist();
+
      List<User> getAllUsers();
 
      List<Item> getAllItemsByUserId(int userId);

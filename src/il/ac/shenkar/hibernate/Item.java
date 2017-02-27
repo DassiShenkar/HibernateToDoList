@@ -1,9 +1,8 @@
 package il.ac.shenkar.hibernate;
 
 import javax.persistence.Id;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-public class Item extends SimpleTagSupport {
+public class Item{
     @Id  // auto increment unique id
     private int id;
     private int userId;
@@ -20,6 +19,10 @@ public class Item extends SimpleTagSupport {
         dao.addItem(this);
     }
 
+    /**
+     *
+     * @return id use for
+     */
     public int getId() {
         return id;
     }
@@ -32,6 +35,13 @@ public class Item extends SimpleTagSupport {
         return userId;
     }
 
+//    /**
+//     * This function
+//     * @param userId id of
+//     * @param
+//     * @return
+//     * @throws
+//     */
     private void setUserId(int userId) {
         this.userId = userId;
     }
@@ -61,5 +71,4 @@ public class Item extends SimpleTagSupport {
     public String toString() {
         return "Item [itemId=" + getId() + ", userId=" + getUserId() + ", itemName=" + getTitle() + ", status=" + getStatus() + "]";
     }
-
 }
