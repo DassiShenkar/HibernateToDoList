@@ -43,15 +43,15 @@ public class User {
         this.password = password;
     }
 
-    public void addItem(String itemName, String itemStatus) {
+    public void addItem(String itemName, String itemStatus) throws ToiListException{
         Item item = new Item(getId(), itemName, itemStatus);
     }
 
-    public void deleteItem(Item item) {
+    public void deleteItem(Item item) throws ToiListException{
         dao.deleteItem(item);
     }
 
-    public List<Item> getItems() {
+    public List<Item> getItems() throws ToiListException{
         return dao.getAllItemsByUserId(getId());
     }
 

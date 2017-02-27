@@ -12,7 +12,7 @@ public class Item{
 
     public Item() {}
 
-    public Item(int userId, String title, String status) {
+    public Item(int userId, String title, String status) throws ToiListException{
         setUserId(userId);
         setTitle(title);
         setStatus(status);
@@ -62,10 +62,10 @@ public class Item{
         this.status = itemStatus;
     }
 
-    public void updateStatus(String status) {
-        setStatus(status);
-        dao.updateItem(this);
-    }
+//    public void updateStatus(String status) throws ToiListException{
+//        setStatus(status);
+//        dao.updateItem(this);
+//    }
 
     @Override
     public String toString() {

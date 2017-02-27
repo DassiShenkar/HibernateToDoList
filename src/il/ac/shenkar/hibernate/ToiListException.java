@@ -9,9 +9,9 @@ public class ToiListException extends Exception {
         logger = Logger.getLogger(ToiListException.class);
         BasicConfigurator.configure();
     }
-
     public ToiListException(String message) {
         super(message);
+        logger.error("Exception - " + message );
     }
 
     public ToiListException(Throwable cause) {

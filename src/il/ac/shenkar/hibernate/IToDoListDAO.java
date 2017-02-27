@@ -4,33 +4,33 @@ package il.ac.shenkar.hibernate;
 import java.util.List;
 
 public interface IToDoListDAO {
-     void createUser(User user);
+     void createUser(User user) throws ToiListException;
+//
+//     void deleteUser(User userId);
+//
+//     void updateUser(User user);
 
-     void deleteUser(User userId);
+     boolean checkIfUserExists(User user) throws ToiListException;
 
-     void updateUser(User user);
+     void addItem(Item item) throws ToiListException;
 
-     boolean checkIfUserExists(User user);
+     void updateItem(Item item) throws ToiListException;
 
-     void addItem(Item item);
+     void deleteItem(Item item) throws ToiListException;
 
-     void updateItem(Item item);
+     Item getItemByID(int itemID) throws ToiListException;
 
-     void deleteItem(Item item);
+     int getUserIdByEmail(User user) throws ToiListException;
 
-     Item getItemByID(int itemID);
+     List getAllTasks() throws ToiListException;
 
-     int getUserIdByEmail(User user);
+     String getNameById(int userId) throws ToiListException;
 
-     List getAllTasks();
+     User getUserById(int userID) throws ToiListException;
 
-     String getNameById(int userId);
+//     Boolean checkIfDBExist();
+//
+//     List<User> getAllUsers();
 
-     User getUserById(int userID);
-
-     Boolean checkIfDBExist();
-
-     List<User> getAllUsers();
-
-     List<Item> getAllItemsByUserId(int userId);
+     List<Item> getAllItemsByUserId(int userId) throws ToiListException;
 }

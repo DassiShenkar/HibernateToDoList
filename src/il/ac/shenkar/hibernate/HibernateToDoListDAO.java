@@ -1,16 +1,13 @@
 package il.ac.shenkar.hibernate;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.util.List;
-
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateToDoListDAO implements IToDoListDAO {
+public class HibernateToDoListDAO implements IToDoListDAO{
     private static HibernateToDoListDAO instance = null;
     private SessionFactory factory;
     private Session session;
@@ -27,153 +24,240 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     @Override
-    public void createUser(User user) {  // create user using Hibernate
-        session = factory.openSession();
-        session.beginTransaction();
-        session.save(user);
-        session.getTransaction().commit();
+    public void createUser(User user) throws ToiListException{  // create user using Hibernate
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            session.save(user);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - createUser with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
+    }
+
+//    @Override
+//    public void deleteUser(User user) {  // delete user using Hibernate
+//        session = factory.openSession();
+//        session.beginTransaction();
+//        session.delete(user);
+//        session.getTransaction().commit();
+//    }
+//
+//    @Override
+//    public void updateUser(User user) {  // update user using Hibernate
+//        session = factory.openSession();
+//        session.beginTransaction();
+//        session.update(user);
+//        session.getTransaction().commit();
+//    }
+
+    @Override
+    public void addItem(Item item) throws ToiListException{   // add item and attach it to existing user
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            session.save(item);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - addItem with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
     }
 
     @Override
-    public void deleteUser(User user) {  // delete user using Hibernate
-        session = factory.openSession();
-        session.beginTransaction();
-        session.delete(user);
-        session.getTransaction().commit();
+    public void updateItem(Item item) throws ToiListException{  // update item
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            session.update(item);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - updateItem with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
     }
 
     @Override
-    public void updateUser(User user) {  // update user using Hibernate
-        session = factory.openSession();
-        session.beginTransaction();
-        session.update(user);
-        session.getTransaction().commit();
+    public void deleteItem(Item item) throws ToiListException{  // delete item
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            session.delete(item);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - deleteItem with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
     }
 
-    @Override
-    public void addItem(Item item) {  // add item and attach it to existing user
-        session = factory.openSession();
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-    }
-
-    @Override
-    public void updateItem(Item item) {  // update item
-        session = factory.openSession();
-        session.beginTransaction();
-        session.update(item);
-        session.getTransaction().commit();
-    }
-
-    @Override
-    public void deleteItem(Item item) {  // delete item
-        session = factory.openSession();
-        session.beginTransaction();
-        session.delete(item);
-        session.getTransaction().commit();
-    }
-
-    @Override
-    public List<User> getAllUsers() {  // get all users from the database
-        session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from User");
-        List users = query.list();
-        //TODO: add if users is empty
-        return users;
-    }
+//    @Override
+//    public List<User> getAllUsers() {  // get all users from the database
+//        session = factory.openSession();
+//        session.beginTransaction();
+//        Query query = session.createQuery("from User");
+//        List users = query.list();
+//        //TODO: add if users is empty
+//        return users;
+//    }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public List<Item> getAllItemsByUserId(int userId) {
-        session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from Item where userId = :userId");
-        query.setParameter("userId", userId);
-        return query.list();
-    }
-
-    @Override
-    public User getUserById(int userID){
-        session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from User where ID = :userId");
-        query.setParameter("userId", userID);
-        List list = query.list();
-        return (User)list.get(0);
-    }
-
-    @Override
-    public Boolean checkIfDBExist() {
+    public List<Item> getAllItemsByUserId(int userId) throws ToiListException{
         try{
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306", "todo", "1234");
-            ResultSet resultSet = conn.getMetaData().getCatalogs();
-            while (resultSet.next()) {
-                String databaseName = resultSet.getString(1);                // Get the database name, which is at position 1
-                if(databaseName.equals("todo")){
-                    return true;
-                }
-
-            }
-            return true;
+            session = factory.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Item where userId = :userId");
+            query.setParameter("userId", userId);
+            return query.list();
         }
-        catch(Exception SQLException){
-            return false;
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - getAllItemsByUserId with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
         }
     }
 
     @Override
-    public Item getItemByID(int itemID) {
+    public User getUserById(int userID) throws ToiListException{
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from User where ID = :userId");
+            query.setParameter("userId", userID);
+            List list = query.list();
+            return (User)list.get(0);
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - getUserById with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
+    }
+
+//    @Override
+//    public Boolean checkIfDBExist() {
+//        try{
+//            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306", "todo", "1234");
+//            ResultSet resultSet = conn.getMetaData().getCatalogs();
+//            while (resultSet.next()) {
+//                String databaseName = resultSet.getString(1);                // Get the database name, which is at position 1
+//                if(databaseName.equals("todo")){
+//                    return true;
+//                }
+//
+//            }
+//            return true;
+//        }
+//        catch(Exception SQLException){
+//            return false;
+//        }
+//    }
+
+    @Override
+    public Item getItemByID(int itemID) throws ToiListException{
         Item item;
-        session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from Item where ID = :itemID");
-        query.setParameter("itemID", itemID);
-        List list = query.list();
-        item = (Item)list.get(0);
-        return item;
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Item where ID = :itemID");
+            query.setParameter("itemID", itemID);
+            List list = query.list();
+            item = (Item)list.get(0);
+            return item;
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - getItemByID with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
     }
 
     @Override
-    public boolean checkIfUserExists(User user) {  // return if user exist in the database or not
-        session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from User where USERNAME= :username and PASSWORD= :password");
-        query.setParameter("username",user.getUsername());
-        query.setParameter("password",user.getPassword());
-        List list = query.list();
-        return !list.isEmpty();  // true if user exist
+    public boolean checkIfUserExists(User user) throws ToiListException{  // return if user exist in the database or not
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from User where USERNAME= :username and PASSWORD= :password");
+            query.setParameter("username",user.getUsername());
+            query.setParameter("password",user.getPassword());
+            List list = query.list();
+            return !list.isEmpty();  // true if user exist
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - checkIfUserExists with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
     }
 
     @Override
-    public int getUserIdByEmail(User user) {
-        session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from User where USERNAME= :username");
-        query.setParameter("username", user.getUsername());
-        List list = query.list();
-        User tempUser = (User)list.get(0);
-        return tempUser.getId();
+    public int getUserIdByEmail(User user) throws ToiListException{
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from User where USERNAME= :username");
+            query.setParameter("username", user.getUsername());
+            List list = query.list();
+            User tempUser = (User)list.get(0);
+            return tempUser.getId();
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - getUserIdByEmail with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
     }
 
     @Override
-    public String getNameById(int userId) {
-        session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from User where ID= :userId");
-        query.setParameter("userId", userId);
-        List list = query.list();
-        User user = (User)list.get(0);
-        return user.getUsername();
+    public String getNameById(int userId) throws ToiListException{
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from User where ID= :userId");
+            query.setParameter("userId", userId);
+            List list = query.list();
+            User user = (User)list.get(0);
+            return user.getUsername();
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - getNameById with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
     }
 
     @Override
-    public List getAllTasks() {
-        session = factory.openSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from Item");
-        //List list = query.list();
-        return query.list();
+    public List getAllTasks() throws ToiListException{
+        try{
+            session = factory.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Item");
+            return query.list();
+        }
+        catch (HibernateException e){
+            throw new ToiListException("Hibernate - getAllTasks with error:" + e.getMessage());
+        }
+        finally{
+            session.close();
+        }
     }
 }
