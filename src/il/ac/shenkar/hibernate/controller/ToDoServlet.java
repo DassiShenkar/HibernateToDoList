@@ -23,7 +23,7 @@ import javax.servlet.http.*;
 @WebServlet("/ToDoServlet")
 public class ToDoServlet extends HttpServlet {
     private final Logger logger;
-    private HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
+    private final HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
     private String responseTime = null;
 
     /**

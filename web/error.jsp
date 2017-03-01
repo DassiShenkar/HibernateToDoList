@@ -8,7 +8,7 @@
     </head>
     <body id="errorPage">
     <section class="details">
-        <h1><h1><ex:title/></h1></h1>
+        <h1><ex:title/></h1>
         <p><%= (String) request.getAttribute("exception")%></p>
         </section>
     </body>

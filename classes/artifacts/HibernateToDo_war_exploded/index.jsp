@@ -2,6 +2,7 @@
 <%@ page import="il.ac.shenkar.hibernate.model.User" %>
 <%@ page import="il.ac.shenkar.hibernate.controller.utils.Time" %>
 <%@ page import="il.ac.shenkar.hibernate.model.dao.ToiListException" %>
+<%@ taglib uri="/WEB-INF/tlds/custom.tld" prefix="ex" %>
 <% Time t = new Time(0,0);
     t.startCount();
 %>
@@ -16,7 +17,7 @@
     </head>
     <body class="index">
         <section class="details">
-            <h1>ToDo list</h1>
+            <h1><ex:title/></h1>
             <%  Cookie[] cookies = request.getCookies();
                 String logged_in = "";
                 String id = "";
