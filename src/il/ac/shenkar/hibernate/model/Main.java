@@ -2,7 +2,6 @@ package il.ac.shenkar.hibernate.model;
 
 import il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO;
 import il.ac.shenkar.hibernate.model.dao.ToiListException;
-
 import java.sql.*;
 /**
  * This is a demo mini program to test the DAO
