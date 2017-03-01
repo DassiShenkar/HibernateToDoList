@@ -1,5 +1,8 @@
 # HibernateToDoList
 
+##Documentation:
+gitPages https://dassishenkar.github.io/HibernateToDoList/
+
 ## Requirments:
 * scala support
 * MySQL with phpmyadmin
