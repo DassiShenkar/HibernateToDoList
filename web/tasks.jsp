@@ -2,8 +2,6 @@
          pageEncoding="windows-1255"
          import="java.util.*,il.ac.shenkar.hibernate.model.Item,il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO"
 %>
-<%@ page import="il.ac.shenkar.hibernate.model.dao.IToDoListDAO" %>
-<%@ page import="il.ac.shenkar.hibernate.model.dao.ToiListException" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -18,7 +16,7 @@
         <button type="button" class="logOut btn btn-info" onclick="location.href='/ToDoServlet?action=log_out'">Log out</button>
         <table class="table table-striped table-bordered">
             <tr>
-                <th>userName</th>
+                <th>Username</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Status</th>

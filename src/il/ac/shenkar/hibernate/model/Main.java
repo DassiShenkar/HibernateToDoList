@@ -4,7 +4,12 @@ import il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO;
 import il.ac.shenkar.hibernate.model.dao.ToiListException;
 
 import java.sql.*;
-
+/**
+ * This is a demo mini program to test the DAO
+ * @author Arel Gindos
+ * @author Dassi Rosen
+ * @author Lior Lerner
+ */
 public class Main{
     public static void main(String []args) throws SQLException,ClassNotFoundException,ToiListException {
         try{

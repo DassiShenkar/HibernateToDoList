@@ -1,8 +1,6 @@
 package il.ac.shenkar.hibernate.model;
 
-import il.ac.shenkar.hibernate.model.dao.HibernateToDoListDAO;
 import il.ac.shenkar.hibernate.model.dao.ToiListException;
-
 import javax.persistence.*;
 
 /**
@@ -11,6 +9,7 @@ import javax.persistence.*;
  * @author Dassi Rosen
  * @author Lior Lerner
 */
+@SuppressWarnings("ALL")
 @Table(name = "ITEMS")
 public class Item {
     @Id
