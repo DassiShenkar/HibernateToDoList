@@ -10,11 +10,21 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+/**
+ * This is the main DAO for the application the do CRUD using hibernate
+ * @author Arel Gindos
+ * @author Dassi Rosen
+ * @author Lior Lerner
+ */
 public class HibernateToDoListDAO implements IToDoListDAO {
     private static HibernateToDoListDAO instance = null;
     private SessionFactory factory;
     private Session session;
 
+    /**
+     *
+     * @return
+     */
     public static HibernateToDoListDAO getInstance() {  // singleton
         if (instance == null) {
             instance = new HibernateToDoListDAO();
@@ -22,6 +32,9 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         return instance;
     }
 
+    /**
+     *
+     */
     private HibernateToDoListDAO() {
         factory = new Configuration().configure().buildSessionFactory();
     }

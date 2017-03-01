@@ -5,6 +5,9 @@ import org.apache.log4j.Logger;
 
 /**
  * This class handling all the exceptions in the project
+ * @author Arel Gindos
+ * @author Dassi Rosen
+ * @author Lior Lerner
  * @see Exception
  */
 public class ToiListException extends Exception {

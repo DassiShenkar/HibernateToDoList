@@ -48,8 +48,6 @@ public class ToDoServlet extends HttpServlet {
         try {
             switch (request.getParameter("action")) {
 
-                case "index":
-
                 case "delete":
                     int id = Integer.parseInt(request.getParameter("id"));
                     int userID = Integer.parseInt(request.getParameter("userID"));
@@ -117,7 +115,8 @@ public class ToDoServlet extends HttpServlet {
                         break;
                     }
             }
-        } catch (ToiListException e) {
+        }
+        catch (ToiListException e) {
             logger.error("Error in doGet", e);
             request.setAttribute("exception", e.getMessage());
             view = request.getRequestDispatcher("error.jsp");
