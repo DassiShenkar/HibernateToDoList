@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/tlds/custom.tld" prefix="ex" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% Cookie[] cookies = request.getCookies();
     double time = 0;
@@ -19,7 +20,7 @@
     </head>
     <body class="create">
         <section class="details">
-            <h1>ToDo list</h1>
+            <h1><ex:title/></h1>
             <h4>Please enter your details:</h4>
             <form method="post" action="ToDoServlet?action=create">
                 <div class="form-group">

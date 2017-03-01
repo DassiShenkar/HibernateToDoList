@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/tlds/custom.tld" prefix="ex" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,7 +8,7 @@
     </head>
     <body id="errorPage">
     <section class="details">
-        <h1>ToDo list</h1>
+        <h1><h1><ex:title/></h1></h1>
         <p><%= (String) request.getAttribute("exception")%></p>
         </section>
     </body>
