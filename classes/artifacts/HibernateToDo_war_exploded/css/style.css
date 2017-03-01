@@ -10,22 +10,23 @@ body{
     padding:50px;
 }
 
+/*noinspection ALL*/
 .details{
     margin-top: 50px;
     width:400px;
     height:400px;
     border: #B0C4DE 2px solid;
-    margin: 0px auto;
+    margin: 0 auto;
 }
 
 .details form{
     padding: 10px;
-    margin: 0px auto;
+    margin: 0 auto;
 }
 
 .details button{
     display: block;
-    margin: 0px auto;
+    margin: 0 auto;
 }
 
 .details p, h1, h4, h5{

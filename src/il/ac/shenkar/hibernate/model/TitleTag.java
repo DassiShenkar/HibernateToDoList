@@ -13,9 +13,9 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  * @author Lior Lerner
  */
 @SuppressWarnings("ALL")
-public class WelcomeTag extends SimpleTagSupport {
+public class TitleTag extends SimpleTagSupport {
     /**
-     * A method that print to the client the main title
+     * A method that print 'ToDolist' in html files using taglib
      * @throws JspException
      * @throws IOException
      */

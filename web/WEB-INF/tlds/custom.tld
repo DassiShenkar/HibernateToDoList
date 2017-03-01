@@ -8,7 +8,7 @@
     <tag>
         <description>TodoList title</description>
         <name>title</name>
-        <tag-class>il.ac.shenkar.hibernate.model.WelcomeTag</tag-class>
+        <tag-class>il.ac.shenkar.hibernate.model.TitleTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 </taglib>
