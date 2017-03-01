@@ -11,6 +11,7 @@ import java.util.List;
  * @author Lior Lerner
  */
 public interface IToDoListDAO {
+
     /**
      * This method add user into DB using hibernate
      * @param user - The user we want to add

@@ -166,7 +166,8 @@ public class ToDoServlet extends HttpServlet {
                         logger.info("response time for login: " + responseTime);
                         response.addCookie(seconds_cookie);
                         request.getRequestDispatcher("/tasks.jsp").forward(request, response);  // move to tasks page
-                    } else {
+                    }
+                    else {
                         request.setAttribute("status", "This user don't exist");  // return to client that user not exist
                         seconds_cookie = new Cookie("time_elapsed", Double.toString(time.computeTime()));
                         seconds_cookie.setMaxAge(60 * 60 * 24);   // 24 hours

@@ -1,7 +1,7 @@
 package il.ac.shenkar.hibernate.controller.utils
 
 /**
-  * This class compute time elapsed between 2 times
+  * This class compute time elapsed between 2 times using Scala
   * @author Arel Gindos
   * @author Dassi Rosen
   * @author Lior Lerner

@@ -1,7 +1,6 @@
 package il.ac.shenkar.hibernate.model.dao;
 
 import java.util.List;
-
 import il.ac.shenkar.hibernate.model.Item;
 import il.ac.shenkar.hibernate.model.User;
 import org.hibernate.HibernateException;
@@ -38,6 +37,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     private HibernateToDoListDAO() {
         factory = new Configuration().configure().buildSessionFactory();
     }
+
     /**
      * @see ToiListException
      */
