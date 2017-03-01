@@ -76,11 +76,14 @@ public class User {
      * Sets user password
      * @param password the desired password to set
      */
-    private void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-
+    /**
+     * Returns the object represent as string
+     * @return String the toString of the object
+     */
     @Override
     public String toString() {
         return "User [id=" + getId() + ", name=" +  ", userName=" + getUsername() + ", password=" + getPassword() + "]";

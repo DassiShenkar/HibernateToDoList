@@ -39,7 +39,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#createUser(User)
      */
     @Override
     public void createUser(User user) throws ToiListException {  // create user using Hibernate
@@ -56,7 +56,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#addItem(Item)
      */
     @Override
     public void addItem(Item item) throws ToiListException {
@@ -73,7 +73,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#updateItem(Item)
      */
     @Override
     public void updateItem(Item item) throws ToiListException {
@@ -90,7 +90,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#deleteItem(Item)
      */
     @Override
     public void deleteItem(Item item) throws ToiListException {
@@ -107,7 +107,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#getAllItemsByUserId(int)
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
@@ -126,7 +126,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#getUserById(int)
      */
     @Override
     public User getUserById(int userID) throws ToiListException {
@@ -145,7 +145,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#getItemByID(int)
      */
     @Override
     public Item getItemByID(int itemID) throws ToiListException {
@@ -166,7 +166,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#checkIfUserExists(User)
      */
     @Override
     public boolean checkIfUserExists(User user) throws ToiListException {
@@ -186,7 +186,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#getUserIdByEmail(User)
      */
     @Override
     public int getUserIdByEmail(User user) throws ToiListException {
@@ -206,7 +206,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#getNameById(int)
      */
     @Override
     public String getNameById(int userId) throws ToiListException {
@@ -226,7 +226,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
     }
 
     /**
-     * @see ToiListException
+     * @see IToDoListDAO#getAllTasks()
      */
     @Override
     public List getAllTasks() throws ToiListException {
