@@ -3,7 +3,7 @@
 ##Documentation:
 gitPages https://dassishenkar.github.io/HibernateToDoList/
 
-## Requirments:
+## Requirements:
 * scala support
 * MySQL with phpmyadmin
 * tomcat server (version 8 or higher)
@@ -38,7 +38,6 @@ gitPages https://dassishenkar.github.io/HibernateToDoList/
  * Delete others tasks
  
  ###Links
- * GitPages:
  * YouTube:
  
  
