@@ -7,24 +7,39 @@ import il.ac.shenkar.hibernate.model.dao.ToiListException;
 import il.ac.shenkar.hibernate.model.User;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+/**
+ * This class is the main servlet that run this application and get all GET and POST requests
+ * @author Arel Gindos
+ * @author Dassi Rosen
+ * @author Lior Lerner
+ * @see HttpServlet#HttpServlet()
+ */
 @WebServlet("/ToDoServlet")
 public class ToDoServlet extends HttpServlet {
     private final Logger logger;
     private HibernateToDoListDAO dao = HibernateToDoListDAO.getInstance();
     private String responseTime = null;
 
+    /**
+     * Default Constructor
+     */
     public ToDoServlet() {
         logger = Logger.getLogger(ToDoServlet.class);
         BasicConfigurator.configure();
     }
 
+    /**
+     * This method get all the get request from client
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     * @throws ServletException Handling Servlet Exception
+     * @throws IOException Handling IO Exception
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Time time = new Time(0, 0);
         time.startCount();  // start count time for response
@@ -111,6 +126,12 @@ public class ToDoServlet extends HttpServlet {
         }
     }
 
+    /**
+     * This method get all the post request from client
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     * @throws ServletException Handling Servlet Exception
+     * @throws IOException Handling IO Exception
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher view;
         Time time = new Time(0, 0);
@@ -166,6 +187,9 @@ public class ToDoServlet extends HttpServlet {
                     request.setAttribute("userID", (usr.getId()));
                     request.setAttribute("userName", usr.getUsername());
                     responseTime = Double.toString(time.computeTime());
+                    if(usr.getUsername().toLowerCase().equals("administrator") && usr.getPassword().toLowerCase().equals("admin")){
+                        request.setAttribute("tasksList", dao.getAllTasks());
+                    }
                     seconds_cookie = new Cookie("time_elapsed", responseTime);
                     seconds_cookie.setMaxAge(60 * 60 * 24);   // 24 hours
                     logger.info("response time for creating a new user: " + responseTime);
@@ -186,6 +210,8 @@ public class ToDoServlet extends HttpServlet {
                         request.setAttribute("tasksList", dao.getAllItemsByUserId(userID));// return tasks by user
                     }
                     responseTime = Double.toString(time.computeTime());
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("userName",dao.getNameById(userID));
                     seconds_cookie = new Cookie("time_elapsed", responseTime);
                     seconds_cookie.setMaxAge(60 * 60 * 24);   // 24 hours
                     logger.info("Response time for updating task: " + responseTime);
