@@ -1,8 +1,8 @@
 # HibernateToDoList
 
 ##Documentation:
-gitPages https://dassishenkar.github.io/HibernateToDoList/
-demo(YouTube) https://www.youtube.com/watch?v=T-gYK-OvjGY
+* gitPages https://dassishenkar.github.io/HibernateToDoList/
+* demo(YouTube) https://www.youtube.com/watch?v=T-gYK-OvjGY
 
 ## Requirements:
 * scala support
