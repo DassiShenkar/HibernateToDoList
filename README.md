@@ -2,6 +2,7 @@
 
 ##Documentation:
 * gitPages https://dassishenkar.github.io/HibernateToDoList/
+* wiki (how to) https://github.com/DassiShenkar/HibernateToDoList/wiki
 * demo(YouTube) https://www.youtube.com/watch?v=T-gYK-OvjGY
 
 ## Requirements:
