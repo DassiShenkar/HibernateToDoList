@@ -2,6 +2,7 @@
 
 ##Documentation:
 gitPages https://dassishenkar.github.io/HibernateToDoList/
+demo(YouTube) https://www.youtube.com/watch?v=T-gYK-OvjGY
 
 ## Requirements:
 * scala support
@@ -37,9 +38,16 @@ gitPages https://dassishenkar.github.io/HibernateToDoList/
  * Update others tasks
  * Delete others tasks
  
- ###Links
- * YouTube:
- 
+ ### Bonuses
+ * Developing a new JSP tag 
+ * Using the Scala programming language
+ * Developing a JSP document that uses java beans
+ * Developing a web interface that allows the web application administrator to monitor the sessions
+ * Implementing logging messages using Log4J
+ * Presenting a welcome message that includes the user name using a coockie
+ * Developing a user interface using the bootstrap library
+ * Creating a website using Git Pages that explains to the user how to use your ToDo web application
+ * Displaying the measured time that took to generate a response
  
  ### Authors
  * Arel Gindos
