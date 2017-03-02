@@ -39,15 +39,15 @@
  * Delete others tasks
  
  ### Bonuses
- * Developing a new JSP tag 
- * Using the Scala programming language
- * Developing a JSP document that uses java beans
- * Developing a web interface that allows the web application administrator to monitor the sessions
- * Implementing logging messages using Log4J
- * Presenting a welcome message that includes the user name using a coockie
- * Developing a user interface using the bootstrap library
- * Creating a website using Git Pages that explains to the user how to use your ToDo web application
- * Displaying the measured time that took to generate a response
+ 1. Developing a new JSP tag 
+ 2. Using the Scala programming language
+ 3. Developing a JSP document that uses java beans
+ 4. Developing a web interface that allows the web application administrator to monitor the sessions
+ 5. Implementing logging messages using Log4J
+ 6. Presenting a welcome message that includes the user name using a coockie
+ 7. Developing a user interface using the bootstrap library
+ 8. Creating a website using Git Pages that explains to the user how to use your ToDo web application
+ 9. Displaying the measured time that took to generate a response
  
  ### Authors
  * Arel Gindos
