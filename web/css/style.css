@@ -3,7 +3,7 @@ body{
 }
 
 .tasks{
-    padding:8px;
+    padding:70px;
 }
 
 .index,.create{
@@ -44,4 +44,8 @@ body{
 
 .logOut{
     float:right;
+}
+
+.status{
+    color:red;
 }

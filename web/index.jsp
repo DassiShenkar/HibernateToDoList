@@ -52,8 +52,8 @@
             %>
             <form class="register_form" method="post" action="ToDoServlet?action=login">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="Enter your email" name="email" required>
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter your username" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
